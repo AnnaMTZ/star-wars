@@ -1,1 +1,14 @@
-<p>landing page</p>
+<section class="hero"> landing
+
+@if (films.isLoading()) {
+  <p>Loading...</p>
+}
+
+
+
+@for (film of $any(films.value()) ?? []; track film.title) {
+  <p>{{ film.title }}</p>
+}
+
+
+</section>

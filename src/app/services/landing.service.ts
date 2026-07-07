@@ -16,4 +16,30 @@ export class landingService {
   getPerson(id: number) {
     return this.http.get(`${environment.apiUrl}/people/${id}`);
   }
+
+
+getFilms() {
+  return this.http.get<any[]>(
+    `${environment.apiUrl}/films`
+  );
+}
+
+
+  getPlanets() {
+    return this.http.get(`${environment.apiUrl}/planets`);
+  }
+
+  getSpecies() {
+    return this.http.get(`${environment.apiUrl}/species`);
+  }
+
+  getVehicles() {
+    return this.http.get(`${environment.apiUrl}/vehicles`);
+  }
+
+  getStarships() {
+    return this.http.get(`${environment.apiUrl}/starships`);
+  }
+
+
 }
