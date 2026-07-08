@@ -1,21 +1,21 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
-
 import { rxResource } from '@angular/core/rxjs-interop';
-
 import { landingService } from '../../services/landing.service';
 
 @Component({
-  selector: 'app-landing',
-  imports: [RouterLink],
-  templateUrl: './landing.html',
-  styleUrls: ['./landing.scss']
+  selector: 'app-a-new-hope',
+  imports: [],
+  templateUrl: './a-new-hope.html',
+  styleUrl: './a-new-hope.scss',
 })
 
-export class Landing {
+export class ANewHope {
   private swapiService = inject(landingService);
 
   films = rxResource({
     stream: () => this.swapiService.getFilms()
   });
-}
+
+      planets = rxResource({
+    stream: () => this.swapiService.getPlanets()
+  });}

@@ -1,0 +1,67 @@
+section {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  gap: 1.5rem;
+  background: url('/assets/images/alderaan.webp') center/cover no-repeat,
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent 45%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9));
+    color: #ffffff;
+    /* subtle white drop shadow to increase contrast over the background */
+  text-shadow: 2px 2px 8px #323131;
+    text-align: center;
+}
+
+section > div,
+section p {
+  width: 100%;
+  max-width: 900px;
+}
+
+section > div {
+  display: grid;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+section div div {
+  padding: 0.8rem 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+section div div:first-child {
+  font-size: 2rem;
+  font-weight: 700;
+  /* slightly stronger highlight for main titles */
+text-shadow: 2px 2px 8px #323131;
+}
+
+section div div:nth-child(2) {
+  font-size: 1.2rem;
+  color: #c6cbd3;
+}
+
+section div div:nth-child(n + 3) {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+section div:nth-of-type(2) {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 720px;
+}
+
+@media (max-width: 720px) {
+  section {
+    padding: 1.5rem;
+  }
+
+  section div div {
+    padding: 0.75rem;
+  }
+}

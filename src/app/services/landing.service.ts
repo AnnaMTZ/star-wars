@@ -24,9 +24,8 @@ getFilms() {
   );
 }
 
-
   getPlanets() {
-    return this.http.get(`${environment.apiUrl}/planets`);
+    return this.http.get<any[]>(`${environment.apiUrl}/planets`);
   }
 
   getSpecies() {
@@ -40,6 +39,4 @@ getFilms() {
   getStarships() {
     return this.http.get(`${environment.apiUrl}/starships`);
   }
-
-
 }

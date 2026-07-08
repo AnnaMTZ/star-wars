@@ -1,14 +1,22 @@
-<section class="hero"> landing
+<section class="hero">
+  landing
 
-@if (films.isLoading()) {
-  <p>Loading...</p>
-}
+  @if (films.isLoading()) {
+    <p>Loading...</p>
+  }
 
 
 
-@for (film of $any(films.value()) ?? []; track film.title) {
-  <p>{{ film.title }}</p>
-}
+  @for (film of films.value() ?? []; track film.title) {
 
+    @if (film.title === 'A New Hope') {
+      <a [routerLink]="['/a-new-hope']">
+        <p>{{ film.title }}</p>
+      </a>
+    } @else {
+      <p>{{ film.title }}</p>
+    }
+
+  }
 
 </section>

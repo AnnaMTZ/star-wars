@@ -1,0 +1,21 @@
+<section>
+
+  @if (films.isLoading()) {
+    <p>Loading...</p>
+  }
+
+  @for (film of films.value() ?? []; track film.title) {
+    @if (film.title === 'A New Hope') {
+        <div>{{ film.title }}</div>
+         <div>episode {{ film.episode_id }}</div>
+      <div>{{ film.opening_crawl }}</div>
+<div>director{{ film.director }}</div>
+<div>release date: {{ film.release_date }}</div>
+  }
+}
+  @for (planet of planets.value() ?? []; track planet; let i = $index) {
+    @if (planet.films.includes('https://swapi.info/api/films/1')) {
+      <p>  {{ planet.name }}</p>
+    }
+}
+</section>
