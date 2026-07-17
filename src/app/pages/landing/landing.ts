@@ -3,11 +3,12 @@ import { RouterLink } from '@angular/router';
 
 import { rxResource } from '@angular/core/rxjs-interop';
 
-import { landingService } from '../../services/landing.service';
+import { landingService } from '../../services/landing.service/landing.service';
+import { Game } from '../../features/game/game';
 
 @Component({
   selector: 'app-landing',
-  imports: [RouterLink],
+  imports: [RouterLink, Game],
   templateUrl: './landing.html',
   styleUrls: ['./landing.scss']
 })

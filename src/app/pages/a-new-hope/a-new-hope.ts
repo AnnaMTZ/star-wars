@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { landingService } from '../../services/landing.service';
+import { landingService } from '../../services/landing.service/landing.service';
 
 @Component({
   selector: 'app-a-new-hope',

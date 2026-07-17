@@ -1,11 +1,9 @@
 <section class="hero">
-  landing
+  <app-game>app game</app-game>
 
   @if (films.isLoading()) {
     <p>Loading...</p>
   }
-
-
 
   @for (film of films.value() ?? []; track film.title) {
 

@@ -1,0 +1,12 @@
+<h2>Do you want an interesting fact about Star Wars?</h2>
+
+<button (click)="showFact()">
+  Yes!
+</button>
+
+@if (currentFact) {
+  <div class="fact-card">
+    <h3>{{ currentFact.title }}</h3>
+    <p>{{ currentFact.content }}</p>
+  </div>
+}
