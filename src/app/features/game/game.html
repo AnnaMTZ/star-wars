@@ -1,12 +1,40 @@
-<h2>Do you want an interesting fact about Star Wars?</h2>
+@if (gameVisible) {
 
-<button (click)="showFact()">
-  Yes!
-</button>
+@if (showWelcome) {
+  <div class="welcome">
+    <h2>Are you ready to explore the Star Wars universe?</h2>
 
-@if (currentFact) {
-  <div class="fact-card">
-    <h3>{{ currentFact.title }}</h3>
-    <p>{{ currentFact.content }}</p>
+    <button (click)="startGame()">Yes</button>
+    <button (click)="declineGame()">No</button>
   </div>
+}
+
+@if (showGoodbyeMessage) {
+  <div class="message">
+    <h2>Go watch Star Wars!</h2>
+  </div>
+}
+
+@if (!showWelcome && !showGoodbyeMessage && currentFact) {
+  <div class="fact-card">
+    <h3>{{ factPrefix }}</h3>
+    <h2>{{ currentFact.title }}</h2>
+    <p>{{ currentFact.content }}</p>
+
+   <div class="button-group">
+  <button (click)="nextFact()">Next Fact</button>
+  <button (click)="doneWithFacts()">Done with Facts</button>
+</div>
+  </div>
+}
+@if (showLastFactMessage) {
+  <div class="message">
+    <h2>This was the last fact!</h2>
+
+    <button (click)="doneWithFacts()">
+      Close
+    </button>
+  </div>
+}
+
 }

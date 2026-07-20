@@ -17,7 +17,19 @@ export class Game implements OnInit {
   currentFact: StarWarsFact | null = null;
   currentIndex = 0;
 
+  showWelcome: boolean = true;
+  showGoodbyeMessage: boolean = false;
+  gameVisible = true;
+
+  factPrefix: string = '';
+
+  isLastFact = false;
+showLastFactMessage = false;
+
+
+
   constructor(private http: HttpClient) {}
+
 
   ngOnInit(): void {
     this.http
@@ -27,12 +39,51 @@ export class Game implements OnInit {
       });
   }
 
-  showFact(): void {
-    if (this.currentIndex >= this.facts.length) {
-      this.currentIndex = 0;
-    }
-
-    this.currentFact = this.facts[this.currentIndex];
-    this.currentIndex++;
+  startGame(): void {
+    this.showWelcome = false;
+    this.showFact();
   }
+
+  declineGame(): void {
+    this.showWelcome = false;
+    this.showGoodbyeMessage = true;
+
+    setTimeout(() => {
+      this.showGoodbyeMessage = false;
+    }, 5000);
+  }
+
+showFact(): void {
+  if (!this.facts.length) {
+    return;
+  }
+
+  if (this.currentIndex >= this.facts.length) {
+    this.currentIndex = 0;
+  }
+
+  this.currentFact = this.facts[this.currentIndex];
+  this.factPrefix = 'Did you know that...';
+
+  // Check if this is the last fact
+  this.isLastFact = this.currentIndex === this.facts.length - 1;
+
+  this.currentIndex++;
+}
+
+nextFact(): void {
+  if (this.isLastFact) {
+    this.currentFact = null;
+    this.showLastFactMessage = true;
+    return;
+  }
+
+  this.showFact();
+}
+
+doneWithFacts(): void {
+  this.gameVisible = false;
+}
+
+  
 }

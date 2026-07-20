@@ -6,7 +6,6 @@
   }
 
   @for (film of films.value() ?? []; track film.title) {
-
     @if (film.title === 'A New Hope') {
       <a [routerLink]="['/a-new-hope']">
         <p>{{ film.title }}</p>
@@ -14,7 +13,6 @@
     } @else {
       <p>{{ film.title }}</p>
     }
-
   }
 
 </section>
