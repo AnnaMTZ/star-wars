@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
 import { Game } from '../../features/game/game';
-import { ANewHope } from '../episode/episode';
+import { Episode } from '../episode/episode';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -29,30 +29,38 @@ private router = inject(Router);
   errorMessage = '';
 
 
-  submitAnswer(): void {
-    const normalizedAnswer = this.answer.trim().toLowerCase();
+submitAnswer(): void {
+  const movie = this.answer.trim().toLowerCase();
 
-    if (normalizedAnswer === 'a new hope') {
-      this.errorMessage = '';
-      this.router.navigate(['/episode']);
-    } else {
-      this.errorMessage = 'Incorrect answer. Try again!';
-    }
+  const films = this.films.value() ?? [];
+
+  const matchingFilm = films.find(
+    (film: any) => film.title.toLowerCase() === movie
+  );
+
+  if (matchingFilm) {
+    this.errorMessage = '';
+    this.router.navigate(['/episode', movie]);
+  } else {
+    this.errorMessage = 'Incorrect answer. Try again!';
   }
+}
 
 goToMovie(): void {
-  const routes: Record<string, string> = {
-    'a new hope': '/a-new-hope',
-    'the empire strikes back': '/empire-strikes-back',
-    'return of the jedi': '/return-of-the-jedi'
-  };
+  const movie = this.movieName.trim().toLowerCase();
 
-  const route = routes[this.movieName.trim().toLowerCase()];
+  const films = this.films.value() ?? [];
 
-  if (route) {
-    this.router.navigate([route]);
+  const matchingFilm = films.find(
+    (film: any) => film.title.toLowerCase() === movie
+  );
+
+  if (matchingFilm) {
+    this.errorMessage = '';
+    this.router.navigate(['/episode', movie]);
   } else {
-    this.errorMessage = 'This episode wasn\'t filmed yet. Are you from the future?';
+    this.errorMessage =
+      "This episode wasn't filmed yet. Are you from the future?";
   }
 }
 

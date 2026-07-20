@@ -1,10 +1,12 @@
+
 section {
   display: grid;
   place-items: center;
   min-height: 100vh;
   padding: 2rem;
   gap: 1.5rem;
-  background: url('/assets/images/alderaan.webp') center/cover no-repeat,
+  // make dynamic background image based on the movie title, with a fallback to a default image
+  background: url('/assets/images/alderaan.jpg') center/cover no-repeat,
     radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent 45%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9));
     color: #ffffff;
