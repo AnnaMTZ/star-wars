@@ -3,10 +3,10 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
 
 @Component({
-  selector: 'app-a-new-hope',
+  selector: 'app-episode',
   imports: [],
-  templateUrl: './a-new-hope.html',
-  styleUrl: './a-new-hope.scss',
+  templateUrl: './episode.html',
+  styleUrl: './episode.scss',
 })
 
 export class ANewHope {
