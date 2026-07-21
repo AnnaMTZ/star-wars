@@ -1,20 +1,19 @@
 
-section {
+  section {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  min-height: 100vh;
   display: grid;
   place-items: center;
-  min-height: 100vh;
   padding: 2rem;
-  gap: 1.5rem;
-  // make dynamic background image based on the movie title, with a fallback to a default image
-  background: url('/assets/images/alderaan.jpg') center/cover no-repeat,
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent 45%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9));
-    color: #ffffff;
-    /* subtle white drop shadow to increase contrast over the background */
+
+  color: white;
   text-shadow: 2px 2px 8px #323131;
-    text-align: center;
 }
 
+ß
 section > div,
 section p {
   width: 100%;

@@ -8,35 +8,31 @@
 <h1>Let's guess which episode this is!</h1>
 
 
-<!-- /// make this dynamic by putting the guess facts in a separae json file -->
-<h2>This movie was filmed in 1977, name it!</h2>
+@if (currentFact) {  
+  <h2>{{ currentFact.content }}</h2>}
 
-<input
-  type="text"
-  [(ngModel)]="answer"
-  placeholder="Enter movie title"
-/>
+<input [(ngModel)]="answer" />
+<button (click)="submitAnswer()">Submit</button>
 
-<button (click)="submitAnswer()">
-  Guess
-</button>
-
+@if (answerError) {
+  <p class="error">{{ answerError }}</p>
+}
 <hr>
 
-<h2>I don't want to guess. Take me to the movie I want!</h2>
+<h2>I don't want to guess. Take me to the episode I want!</h2>
 
 <input
   type="text"
   [(ngModel)]="movieName"
-  placeholder="Enter movie name"
+  placeholder="Enter episode name"
 />
 
 <button (click)="goToMovie()">
   Go
 </button>
 
-@if (errorMessage) {
-  <p>{{ errorMessage }}</p>
+@if (movieError) {
+  <p class="error">{{ movieError }}</p>
 }
 
 </section>

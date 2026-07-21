@@ -24,12 +24,9 @@ export class Game implements OnInit {
   factPrefix: string = '';
 
   isLastFact = false;
-showLastFactMessage = false;
-
-
+ showLastFactMessage = false;
 
   constructor(private http: HttpClient) {}
-
 
   ngOnInit(): void {
     this.http

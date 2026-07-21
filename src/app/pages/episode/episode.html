@@ -1,17 +1,31 @@
-<section>
 
-@for (film of films.value() ?? []; track film.episode_id) {
+<section
+  [style.background-image]="backgroundStyle"
+  style="background-size: cover; background-position: center;"
+>
+  @for (film of films.value() ?? []; track film.episode_id) {
 
-  @if (film.title.toLowerCase() === episodeName) {
-<div>
-    <h1>{{ film.title }}</h1>
-    <p><strong>Episode:</strong> {{ film.episode_id }}</p>
-    <p><strong>Director:</strong> {{ film.director }}</p>
-    <p><strong>Producer:</strong> {{ film.producer }}</p>
-    <p><strong>Release date:</strong> {{ film.release_date }}</p>
-     <p><strong>Opening crawl:</strong> {{ film.opening_crawl }}</p>
-    </div>
-    <!-- /// add planets to the movie and link with another api - check in previous commits -->
+    @if (film.title.toLowerCase() === episodeName.toLowerCase()) {
+
+      <div>
+        <h1>{{ film.title }}</h1>
+
+        <p><strong>Episode:</strong> {{ film.episode_id }}</p>
+        <p><strong>Director:</strong> {{ film.director }}</p>
+        <p><strong>Producer:</strong> {{ film.producer }}</p>
+        <p><strong>Release date:</strong> {{ film.release_date }}</p>
+        <p>
+          <strong>Opening crawl:</strong>
+          {{ film.opening_crawl }}
+        </p>
+
+        @if (episodeFact) {
+          <p>
+            <strong>Fun fact:</strong>
+            {{ episodeFact.content }}
+          </p>
+        }
+      </div>
+    }
   }
-}
 </section>
