@@ -1,3 +1,16 @@
+.universe-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  display: block;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
 
 .hero {
   display: grid;
@@ -5,10 +18,7 @@
   min-height: 100vh;
   padding: 2rem;
   gap: 1.5rem;
-  background-image: url('/assets/images/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+background: transparent !important;
   color: #f8f9fa;
   text-align: center;
 }
