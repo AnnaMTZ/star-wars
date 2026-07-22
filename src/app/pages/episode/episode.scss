@@ -3,17 +3,23 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-
   min-height: 100vh;
   display: grid;
   place-items: center;
   padding: 2rem;
+  font-family: "Star Jedi", Arial, sans-serif;
+  color: #feda4a;
 
-  color: white;
-  text-shadow: 2px 2px 8px #323131;
+text-shadow:
+  -2px -2px 0 #000,
+   2px -2px 0 #000,
+  -2px  2px 0 #000,
+   2px  2px 0 #000,
+   0    0   10px #000,
+   0    0   20px rgba(0, 0, 0, 0.8);
 }
 
-ß
+
 section > div,
 section p {
   width: 100%;
@@ -26,18 +32,19 @@ section > div {
   align-items: center;
 }
 
-section div div {
-  padding: 0.8rem 1rem;
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
 
 section div div:first-child {
   font-size: 2rem;
   font-weight: 700;
-  /* slightly stronger highlight for main titles */
-text-shadow: 2px 2px 8px #323131;
+color: #feda4a;
+
+text-shadow:
+  -2px -2px 0 #000,
+   2px -2px 0 #000,
+  -2px  2px 0 #000,
+   2px  2px 0 #000,
+   0    0   10px #000,
+   0    0   20px rgba(0, 0, 0, 0.8);
 }
 
 section div div:nth-child(2) {
@@ -55,6 +62,86 @@ section div:nth-of-type(2) {
   gap: 0.75rem;
   width: 100%;
   max-width: 720px;
+}
+
+.crawl-container {
+  height: 500px;
+  overflow: hidden;
+  color: #feda4a;
+}
+
+.crawl-content {
+  left: 10%;
+  text-align: center;
+  white-space: pre-line;
+  animation: crawl 15s linear forwards;
+}
+
+@keyframes crawl {
+  from {
+    transform: translateY(500px);
+  }
+
+  to {
+    transform: translateY(-150%);
+  }
+}
+
+.film-info {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  color: #feda4a;
+
+  text-shadow:
+    0 0 10px rgba(254, 218, 74, 0.7),
+    0 0 20px rgba(254, 218, 74, 0.5);
+
+  font-family: Arial, sans-serif;
+}
+
+.film-info h1 {
+  font-size: clamp(3rem, 8vw, 7rem);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.film-info p {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  margin: 0.5rem 0;
+}
+
+/* Reveal animation */
+
+.reveal {
+  opacity: 0;
+  transform: scale(0.8);
+  animation: starWarsReveal 0.8s ease-out forwards;
+}
+
+.reveal-1 { animation-delay: 0s; }
+.reveal-2 { animation-delay: 0.6s; }
+.reveal-3 { animation-delay: 1.2s; }
+.reveal-4 { animation-delay: 1.8s; }
+.reveal-5 { animation-delay: 2.4s; }
+
+@keyframes starWarsReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
 }
 
 @media (max-width: 720px) {

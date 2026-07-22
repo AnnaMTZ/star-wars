@@ -7,25 +7,36 @@
 
     @if (film.title.toLowerCase() === episodeName.toLowerCase()) {
 
-      <div>
-        <h1>{{ film.title }}</h1>
-
-        <p><strong>Episode:</strong> {{ film.episode_id }}</p>
-        <p><strong>Director:</strong> {{ film.director }}</p>
-        <p><strong>Producer:</strong> {{ film.producer }}</p>
-        <p><strong>Release date:</strong> {{ film.release_date }}</p>
-        <p>
-          <strong>Opening crawl:</strong>
-          {{ film.opening_crawl }}
-        </p>
-
-        @if (episodeFact) {
-          <p>
-            <strong>Fun fact:</strong>
-            {{ episodeFact.content }}
-          </p>
-        }
+ @if (showCrawl) {
+  <div class="starwars-container">
+    <div class="crawl">
+      <div
+        class="crawl-content"
+        (animationend)="onCrawlEnd()"
+      >
+        <p class="crawl-text">{{ film.opening_crawl }}</p>
       </div>
+    </div>
+  </div>
+}
+
+@if (showFilmInfo) {
+  <div class="film-info">
+    <h1 class="reveal reveal-1">{{ film.title }}</h1>
+    <p class="reveal reveal-2">
+      <strong>Episode:</strong> {{ film.episode_id }}
+    </p>
+    <p class="reveal reveal-3">
+      <strong>Director:</strong> {{ film.director }}
+    </p>
+    <p class="reveal reveal-4">
+      <strong>Producer:</strong> {{ film.producer }}
+    </p>
+    <p class="reveal reveal-5">
+      <strong>Release date:</strong> {{ film.release_date }}
+    </p>
+  </div>
+}
     }
   }
 </section>

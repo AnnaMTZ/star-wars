@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
+import { CommonModule } from '@angular/common';
+
 
 interface EpisodeFact {
   title: string;
@@ -24,7 +26,9 @@ export class Episode implements OnInit {
   readonly episodeName =
     this.route.snapshot.paramMap.get('movie') ?? '';
 
-  episodeFact?: EpisodeFact;
+  episodeFact?: EpisodeFact;  
+  showCrawl = true;
+showFilmInfo = false;
 
   films = rxResource({
     stream: () => this.swapiService.getFilms(),
@@ -52,6 +56,11 @@ export class Episode implements OnInit {
         );
       });
   }
+
+onCrawlEnd(): void {
+  this.showCrawl = false;
+  this.showFilmInfo = true;
+}
 
   get backgroundImage(): string {
     if (!this.episodeName) {
