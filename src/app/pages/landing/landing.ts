@@ -106,7 +106,6 @@ ngAfterViewInit(): void {
 
   this.createUniverse();
 }
-
 private createUniverse(): void {
   const canvas = this.canvas?.nativeElement;
 
@@ -124,12 +123,11 @@ private createUniverse(): void {
     3000
   );
 
-  camera.position.z = 15;
+  camera.position.set(0, 0, 15);
 
   const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
-    alpha: true,
   });
 
   renderer.setSize(
@@ -138,40 +136,69 @@ private createUniverse(): void {
   );
 
   renderer.setPixelRatio(
-    window.devicePixelRatio
+    Math.min(window.devicePixelRatio, 2)
   );
 
   renderer.setClearColor(0x000000, 1);
 
-  // LIGHTS
+  // LIGHTING
 
-  const ambientLight = new THREE.AmbientLight(
-    0xffffff,
-    0.3
-  );
+  const ambientLight =
+    new THREE.AmbientLight(
+      0xffffff,
+      0.15
+    );
+
   scene.add(ambientLight);
 
-  const sunLight = new THREE.DirectionalLight(
-    0xffffff,
-    3
+  const sunLight =
+    new THREE.DirectionalLight(
+      0xffffff,
+      5
+    );
+
+  sunLight.position.set(
+    -25,
+    15,
+    25
   );
 
-  sunLight.position.set(-15, 10, 15);
-
   scene.add(sunLight);
+
+  // TEXTURES
+
+  const loader =
+    new THREE.TextureLoader();
+
+  const colorMap =
+    loader.load(
+      'assets/textures/rocky_planet_color.jpg'
+    );
+
+  const normalMap =
+    loader.load(
+      'assets/textures/rocky_planet_normal.jpg'
+    );
+
+  const roughnessMap =
+    loader.load(
+      'assets/textures/rocky_planet_roughness.jpg'
+    );
 
   // PLANET
 
   const planet = new THREE.Mesh(
     new THREE.SphereGeometry(
       4,
-      128,
-      128
+      256,
+      256
     ),
     new THREE.MeshStandardMaterial({
-      color: 0x3d6fa5,
+      map: colorMap,
+      normalMap,
+      roughnessMap,
       roughness: 1,
-      metalness: 0,
+      metalness: 0
     })
   );
 
@@ -181,19 +208,20 @@ private createUniverse(): void {
 
   // ATMOSPHERE
 
-  const atmosphere = new THREE.Mesh(
-    new THREE.SphereGeometry(
-      4.15,
-      128,
-      128
-    ),
-    new THREE.MeshBasicMaterial({
-      color: 0x88ccff,
-      transparent: true,
-      opacity: 0.15,
-      side: THREE.BackSide,
-    })
-  );
+  const atmosphere =
+    new THREE.Mesh(
+      new THREE.SphereGeometry(
+        4.1,
+        128,
+        128
+      ),
+      new THREE.MeshBasicMaterial({
+        color: 0x87ceeb,
+        transparent: true,
+        opacity: 0.05,
+        side: THREE.BackSide
+      })
+    );
 
   scene.add(atmosphere);
 
@@ -206,7 +234,8 @@ private createUniverse(): void {
       64
     ),
     new THREE.MeshStandardMaterial({
-      color: 0x777777,
+      color: 0x888888,
+      roughness: 1
     })
   );
 
@@ -214,39 +243,43 @@ private createUniverse(): void {
 
   // STARS
 
-  const starsGeometry =
+  const starGeometry =
     new THREE.BufferGeometry();
 
-  const starCount = 15000;
+  const starCount = 20000;
 
-  const positions =
+  const starPositions =
     new Float32Array(
       starCount * 3
     );
 
-  for (let i = 0; i < positions.length; i++) {
-    positions[i] =
-      (Math.random() - 0.5) * 2000;
+  for (
+    let i = 0;
+    i < starPositions.length;
+    i++
+  ) {
+    starPositions[i] =
+      (Math.random() - 0.5) *
+      2500;
   }
 
-  starsGeometry.setAttribute(
+  starGeometry.setAttribute(
     'position',
     new THREE.BufferAttribute(
-      positions,
+      starPositions,
       3
     )
   );
 
-  const starsMaterial =
-    new THREE.PointsMaterial({
-      color: 0xffffff,
-      size: 1.2,
-    });
-
-  const stars = new THREE.Points(
-    starsGeometry,
-    starsMaterial
-  );
+  const stars =
+    new THREE.Points(
+      starGeometry,
+      new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 0.9,
+        sizeAttenuation: true
+      })
+    );
 
   scene.add(stars);
 
@@ -272,36 +305,51 @@ private createUniverse(): void {
     }
   );
 
-  // ANIMATION LOOP
+  // ANIMATION
 
   const animate = () => {
-    requestAnimationFrame(animate);
+    requestAnimationFrame(
+      animate
+    );
 
-    // Planet rotation
-    planet.rotation.y += 0.002;
+    const orbitTime =
+      Date.now() * 0.0003;
 
-    atmosphere.rotation.y += 0.0022;
+    // realistic rotation
 
-    // Moon orbit
-    const time = Date.now() * 0.0004;
+    planet.rotation.y +=
+      0.0012;
+
+    atmosphere.rotation.y +=
+      0.00125;
+
+    // moon orbit
 
     moon.position.x =
-      Math.cos(time) * 8;
+      Math.cos(orbitTime) *
+      8;
 
     moon.position.z =
-      Math.sin(time) * 8;
+      Math.sin(orbitTime) *
+      8;
 
-    // Slow starfield rotation
-    stars.rotation.y += 0.00003;
+    moon.position.y =
+      Math.sin(
+        orbitTime * 1.3
+      ) * 1.2;
 
-    // Camera parallax
+    stars.rotation.y +=
+      0.00001;
+
+    // camera parallax
+
     camera.position.x +=
-      (mouseX * 1.5 -
+      (mouseX * 1.3 -
         camera.position.x) *
       0.02;
 
     camera.position.y +=
-      (-mouseY * 1.5 -
+      (-mouseY * 1.3 -
         camera.position.y) *
       0.02;
 
@@ -335,6 +383,9 @@ private createUniverse(): void {
     }
   );
 
-  console.log('Universe created');
+  console.log(
+    'Realistic rocky planet created'
+  );
 }
+
 }

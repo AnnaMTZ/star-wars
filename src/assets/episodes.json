@@ -1,26 +1,32 @@
 [
   {
     "title": "The Phantom Menace",
-    "content": "This film introduced Darth Maul, whose double-bladed lightsaber became one of the most iconic weapons in Star Wars history."
+    "content": "This film introduced Darth Maul, whose double-bladed lightsaber became one of the most iconic weapons in Star Wars history.",
+    "trailer": "https://www.youtube.com/results?search_query=the+phantom+menace+trailer"
   },
   {
     "title": "Attack of the Clones",
-    "content": "This was the first Star Wars movie shot almost entirely with digital cameras instead of traditional film."
+    "content": "This was the first Star Wars movie shot almost entirely with digital cameras instead of traditional film.",
+    "trailer": "https://www.youtube.com/watch?v=gYbW1F_c9eM"
   },
   {
     "title": "Revenge of the Sith",
-    "content": "This episode shows Anakin Skywalker's tragic transformation into Darth Vader, a turning point for the entire saga."
+    "content": "This episode shows Anakin Skywalker's tragic transformation into Darth Vader, a turning point for the entire saga.",
+    "trailer": "https://www.youtube.com/results?search_query=revenge+of+the+sith+trailer"
   },
   {
     "title": "A New Hope",
-    "content": "Originally released simply as 'Star Wars' in 1977, it became a global phenomenon and launched the franchise."
+    "content": "Originally released simply as 'Star Wars' in 1977, it became a global phenomenon and launched the franchise.",
+    "trailer": "https://www.youtube.com/watch?v=k-Ua033oKAk"
   },
   {
     "title": "The Empire Strikes Back",
-    "content": "The famous revelation 'I am your father' is considered one of the biggest plot twists in movie history."
+    "content": "The famous revelation 'I am your father' is considered one of the biggest plot twists in movie history.",
+    "trailer": "https://www.youtube.com/watch?v=urhsYepFqs0"
   },
   {
     "title": "Return of the Jedi",
-    "content": "The Ewoks were partly inspired by the appearance and behavior of real-life teddy bears."
+    "content": "The Ewoks were partly inspired by the appearance and behavior of real-life teddy bears.",
+    "trailer": "https://www.youtube.com/watch?v=EcQKTTwLA-Y"
   }
 ]
