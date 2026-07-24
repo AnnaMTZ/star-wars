@@ -1,40 +1,17 @@
-<canvas #universeCanvas class="universe-canvas"></canvas>
+<section class="content">
 
-<section class="content hero">
-  <app-game>app game</app-game>
+<div class="films-container">
+  @for (film of films; track film.episode_id) {
+    <div
+      class="film-card"
+      [routerLink]="['/episode', toSlug(film.title)]"
+    >
+      <h2>{{ film.title }}</h2>
 
-  @if (films.isLoading()) {
-    <p>Loading...</p>
+    </div>
   }
+</div>
 
-<h1>Let's guess which episode this is!</h1>
-
-
-@if (currentFact) {  
-  <h2>{{ currentFact.content }}</h2>}
-
-<input [(ngModel)]="answer" />
-<button (click)="submitAnswer()">Submit</button>
-
-@if (answerError) {
-  <p class="error">{{ answerError }}</p>
-}
-<hr>
-
-<h2>I don't want to guess. Take me to the episode I want!</h2>
-
-<input
-  type="text"
-  [(ngModel)]="movieName"
-  placeholder="Enter episode name"
-/>
-
-<button (click)="goToMovie()">
-  Go
-</button>
-
-@if (movieError) {
-  <p class="error">{{ movieError }}</p>
-}
 
 </section>
+

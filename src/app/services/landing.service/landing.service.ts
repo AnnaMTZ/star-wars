@@ -13,12 +13,11 @@ export class landingService {
     return this.http.get(`${environment.apiUrl}/people`).pipe(tap((data: any) => console.log(data)));
   }
 
-  getPerson(id: number) {
-    return this.http.get(`${environment.apiUrl}/people/${id}`);
-  }
+getPerson(id: string) {
+  return this.http.get(`${environment.apiUrl}/people/${id}`);
+}
 
-
-getFilms() {
+  getFilms() {
   return this.http.get<any[]>(
     `${environment.apiUrl}/films`
   );
@@ -29,14 +28,14 @@ getFilms() {
   }
 
   getSpecies() {
-    return this.http.get(`${environment.apiUrl}/species`);
+    return this.http.get<any[]>(`${environment.apiUrl}/species`);
   }
 
   getVehicles() {
-    return this.http.get(`${environment.apiUrl}/vehicles`);
+    return this.http.get<any[]>(`${environment.apiUrl}/vehicles`);
   }
 
   getStarships() {
-    return this.http.get(`${environment.apiUrl}/starships`);
+    return this.http.get<any[]>(`${environment.apiUrl}/starships`);
   }
 }

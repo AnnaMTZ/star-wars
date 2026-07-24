@@ -1,62 +1,41 @@
-.universe-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  display: block;
-}
+
 
 .content {
-  position: relative;
-  z-index: 1;
+  // background-image: url("../../../assets/images/default.jpg");
+  background-color: rgb(8, 8, 18);
+  background-repeat: no-repeat; 
+  background-size: cover;      
+  background-position: center;  
+  background-attachment: fixed; 
+  height: 100vh;
+  width: 100vw;
+  color: white
 }
 
-.hero {
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
-  padding: 2rem;
-  gap: 1.5rem;
-background: transparent !important;
-  color: #f8f9fa;
+.films-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.film-card {
+  width: 250px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #1f2937;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   text-align: center;
+  transition: transform 0.2s ease;
 }
 
-.hero > * {
-  width: 100%;
-  max-width: 900px;
+.film-card:hover {
+  transform: translateY(-5px);
 }
 
-.hero a {
-  display: inline-block;
-  margin: 1rem 0;
-  padding: 0.85rem 1.4rem;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  text-decoration: none;
-  transition: background 0.2s ease;
-}
-
-.hero a:hover {
-  background: rgba(255, 255, 255, 0.16);
-}
-
-.hero p,
-.hero div {
-  background: rgba(0, 0, 0, 0.45);
-  padding: 1rem 1.25rem;
-  border-radius: 1rem;
-}
-
-@media (max-width: 720px) {
-  .hero {
-    padding: 1.2rem;
-  }
-
-  .hero a {
-    width: 100%;
-    max-width: 320px;
-  }
+.film-card h2 {
+  margin-bottom: 10px;
+  color: #ffe81f;
 }

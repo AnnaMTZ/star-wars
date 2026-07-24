@@ -1,0 +1,46 @@
+
+  
+  <div class="person-details">
+    <h1>{{ person?.name }}</h1>
+
+<p><strong>Height:</strong> {{ person?.height }}</p>
+
+<p><strong>Mass:</strong> {{ person?.mass }}</p>
+
+<p><strong>Hair Color:</strong> {{ person?.hair_color }}</p>
+
+<p><strong>Skin Color:</strong> {{ person?.skin_color }}</p>
+
+<p><strong>Eye Color:</strong> {{ person?.eye_color }}</p>
+
+<p><strong>Birth Year:</strong> {{ person?.birth_year }}</p>
+
+<p><strong>Gender:</strong> {{ person?.gender }}</p>
+
+<p>
+  <strong>Homeworld:</strong>
+  <a [href]="person.homeworld" target="_blank">
+    {{ person?.homeworld }}
+  </a>
+</p>
+
+<p><strong>Films:</strong> {{ person?.films?.length ?? 0 }}</p>
+
+<p><strong>Species:</strong> {{ person?.species?.length ?? 0 }}</p>
+
+<p><strong>Vehicles:</strong> {{ person?.vehicles?.length ?? 0 }}</p>
+
+<p><strong>Starships:</strong> {{ person?.starships?.length ?? 0 }}</p>
+
+<p><strong>Created:</strong> {{ person?.created | date:'medium' }}</p>
+
+<p><strong>Last Edited:</strong> {{ person?.edited | date:'medium' }}</p>
+
+<p>
+  <strong>API URL:</strong>
+  <a [href]="person.url" target="_blank">
+    View Resource
+  </a>
+</p>
+  </div>
+  

@@ -1,10 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
 import { CommonModule } from '@angular/common';
-
+import { RouterLink } from '@angular/router';
 
 interface EpisodeFact {
   title: string;
@@ -14,21 +13,21 @@ interface EpisodeFact {
 @Component({
   selector: 'app-episode',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterLink],
   templateUrl: './episode.html',
   styleUrl: './episode.scss',
 })
-export class Episode implements OnInit {
+export class Episode {
   private swapiService = inject(landingService);
   private route = inject(ActivatedRoute);
-  private http = inject(HttpClient);
+
 
   readonly episodeName =
     this.route.snapshot.paramMap.get('movie') ?? '';
 
-  episodeFact?: EpisodeFact;  
+  episodeFact?: EpisodeFact;
   showCrawl = true;
-showFilmInfo = false;
+  showFilmInfo = false;
 
   films = rxResource({
     stream: () => this.swapiService.getFilms(),
@@ -38,28 +37,46 @@ showFilmInfo = false;
     stream: () => this.swapiService.getPlanets(),
   });
 
-  /// might need to check if the film is using the same route
+people = rxResource({
+    stream: () => this.swapiService.getPeople(),
+  });
 
-  ngOnInit(): void {
-    this.http
-      .get<EpisodeFact[]>('/assets/episodes.json')
-      .subscribe((facts) => {
-        const normalizedEpisodeName = this.episodeName
-          .replace(/-/g, ' ')
-          .toLowerCase()
-          .trim();
+  species = rxResource({
+    stream: () => this.swapiService.getSpecies(),
+  });
 
-        this.episodeFact = facts.find(
-          (fact) =>
-            fact.title.toLowerCase().trim() ===
-            normalizedEpisodeName
-        );
-      });
+  vehicles = rxResource({
+    stream: () => this.swapiService.getVehicles(),
+  });
+
+  starships = rxResource({
+    stream: () => this.swapiService.getStarships(),
+  });
+
+getPersonId(url: string): string {
+  return url.split('/').pop() ?? '';
+}
+
+get currentFilm(): any | null {
+  const films = this.films.value();
+
+  if (!films) {
+    return null;
   }
 
-onCrawlEnd(): void {
-  this.showCrawl = false;
-  this.showFilmInfo = true;
+  return (
+    films.find((film: any) => {
+      const title = film.properties?.title ?? film.title;
+
+      const slug = title
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-');
+
+      return slug === this.episodeName.toLowerCase();
+    }) ?? null
+  );
 }
 
   get backgroundImage(): string {
@@ -78,9 +95,7 @@ onCrawlEnd(): void {
 
   get backgroundStyle(): string {
     return `
-      url('${this.backgroundImage}'),
-      radial-gradient(circle at top, rgba(255,255,255,.05), transparent 45%),
-      linear-gradient(180deg, rgba(0,0,0,.85), rgba(0,0,0,.9))
+      url('${this.backgroundImage}')
     `;
   }
 }

@@ -1,42 +1,78 @@
-
 <section
   [style.background-image]="backgroundStyle"
   style="background-size: cover; background-position: center;"
 >
-  @for (film of films.value() ?? []; track film.episode_id) {
+  @if (currentFilm) {
 
-    @if (film.title.toLowerCase() === episodeName.toLowerCase()) {
+      <h1>{{ currentFilm.properties?.title ?? currentFilm.title }}</h1>
 
- @if (showCrawl) {
-  <div class="starwars-container">
-    <div class="crawl">
-      <div
-        class="crawl-content"
-        (animationend)="onCrawlEnd()"
-      >
-        <p class="crawl-text">{{ film.opening_crawl }}</p>
-      </div>
-    </div>
-  </div>
+      <h3>Episode {{ currentFilm.properties?.episode_id ?? currentFilm.episode_id }}</h3>
+
+      <h3>{{ currentFilm.properties?.opening_crawl ?? currentFilm.opening_crawl }}</h3>
+
+      <p>Director: {{ currentFilm.properties?.director ?? currentFilm.director }}</p>
+
+      <p>Producer: {{ currentFilm.properties?.producer ?? currentFilm.producer }}</p>
+
+      <p>Release Date:
+        {{ currentFilm.properties?.release_date ?? currentFilm.release_date }}
+      </p>
+ <h2>Characters</h2>
+@for (person of people.value() ?? []; track person.uid) {
+  @if (person.films?.includes(currentFilm.url)) {
+    <p>
+<a [routerLink]="['/people', getPersonId(person.url)]">
+  {{ person.name }}
+</a>
+    </p>
+
+
+  }
 }
 
-@if (showFilmInfo) {
-  <div class="film-info">
-    <h1 class="reveal reveal-1">{{ film.title }}</h1>
-    <p class="reveal reveal-2">
-      <strong>Episode:</strong> {{ film.episode_id }}
+<h2>Planets</h2>
+@for (planet of planets.value() ?? []; track planet.uid) {
+  @if (planet.films?.includes(currentFilm.url)) {
+    <p>
+  
+        {{ planet.name }}
+
     </p>
-    <p class="reveal reveal-3">
-      <strong>Director:</strong> {{ film.director }}
-    </p>
-    <p class="reveal reveal-4">
-      <strong>Producer:</strong> {{ film.producer }}
-    </p>
-    <p class="reveal reveal-5">
-      <strong>Release date:</strong> {{ film.release_date }}
-    </p>
-  </div>
+  }
 }
-    }
+
+<h2>Species</h2>
+@for (specie of species.value() ?? []; track specie.uid) {
+  @if (specie.films?.includes(currentFilm.url)) {
+    <p>
+      <a [href]="specie.url" target="_blank" rel="noopener noreferrer">
+        {{ specie.name }}
+      </a>
+    </p>
+  }
+}
+
+<h2>Vehicles</h2>
+@for (vehicle of vehicles.value() ?? []; track vehicle.uid) {
+  @if (vehicle.films?.includes(currentFilm.url)) {
+    <p>
+      <a [href]="vehicle.url" target="_blank" rel="noopener noreferrer">
+        {{ vehicle.name }}
+      </a>
+    </p>
+  }
+}
+
+<h2>Starships</h2>
+@for (starship of starships.value() ?? []; track starship.uid) {
+  @if (starship.films?.includes(currentFilm.url)) {
+    <p>
+      <a [href]="starship.url" target="_blank" rel="noopener noreferrer">
+        {{ starship.name }}
+      </a>
+    </p>
+  }
+}
+
   }
 </section>
