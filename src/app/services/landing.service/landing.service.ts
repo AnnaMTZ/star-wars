@@ -23,6 +23,10 @@ getPerson(id: string) {
   );
 }
 
+getByUrl(url: string) {
+  return this.http.get<any>(url);
+}
+
   getPlanets() {
     return this.http.get<any[]>(`${environment.apiUrl}/planets`);
   }

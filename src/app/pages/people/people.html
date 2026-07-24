@@ -1,46 +1,83 @@
+<section>
+  @if (currentPerson) {
 
-  
-  <div class="person-details">
-    <h1>{{ person?.name }}</h1>
+    <div class="person-details">
 
-<p><strong>Height:</strong> {{ person?.height }}</p>
+      <h1>{{ currentPerson.name }}</h1>
 
-<p><strong>Mass:</strong> {{ person?.mass }}</p>
+      <div class="info-grid">
 
-<p><strong>Hair Color:</strong> {{ person?.hair_color }}</p>
+        <p><strong>Height:</strong> {{ currentPerson.height }}</p>
 
-<p><strong>Skin Color:</strong> {{ person?.skin_color }}</p>
+        <p><strong>Mass:</strong> {{ currentPerson.mass }}</p>
 
-<p><strong>Eye Color:</strong> {{ person?.eye_color }}</p>
+        <p><strong>Hair Color:</strong> {{ currentPerson.hair_color }}</p>
 
-<p><strong>Birth Year:</strong> {{ person?.birth_year }}</p>
+        <p><strong>Skin Color:</strong> {{ currentPerson.skin_color }}</p>
 
-<p><strong>Gender:</strong> {{ person?.gender }}</p>
+        <p><strong>Eye Color:</strong> {{ currentPerson.eye_color }}</p>
 
-<p>
-  <strong>Homeworld:</strong>
-  <a [href]="person.homeworld" target="_blank">
-    {{ person?.homeworld }}
-  </a>
-</p>
+        <p><strong>Birth Year:</strong> {{ currentPerson.birth_year }}</p>
 
-<p><strong>Films:</strong> {{ person?.films?.length ?? 0 }}</p>
+        <p><strong>Gender:</strong> {{ currentPerson.gender }}</p>
 
-<p><strong>Species:</strong> {{ person?.species?.length ?? 0 }}</p>
+        <p><strong>Created:</strong> {{ currentPerson.created }}</p>
 
-<p><strong>Vehicles:</strong> {{ person?.vehicles?.length ?? 0 }}</p>
+        <p><strong>Edited:</strong> {{ currentPerson.edited }}</p>
 
-<p><strong>Starships:</strong> {{ person?.starships?.length ?? 0 }}</p>
+        <h2>Homeworld</h2>
 
-<p><strong>Created:</strong> {{ person?.created | date:'medium' }}</p>
+        @for (planet of planets.value() ?? []; track planet.uid) {
+          @if (planet.url === currentPerson.homeworld) {
+            <p>{{ planet.name }}</p>
+          }
+        }
 
-<p><strong>Last Edited:</strong> {{ person?.edited | date:'medium' }}</p>
+        <h2>Species</h2>
 
-<p>
-  <strong>API URL:</strong>
-  <a [href]="person.url" target="_blank">
-    View Resource
-  </a>
-</p>
-  </div>
-  
+        @for (specie of species.value() ?? []; track specie.uid) {
+          @if (currentPerson.species?.includes(specie.url)) {
+            <p>
+              <a [href]="specie.url" target="_blank" rel="noopener noreferrer">
+                {{ specie.name }}
+              </a>
+            </p>
+          }
+        }
+
+        <h2>Vehicles</h2>
+
+        @for (vehicle of vehicles.value() ?? []; track vehicle.uid) {
+          @if (currentPerson.vehicles?.includes(vehicle.url)) {
+            <p>
+              <a [href]="vehicle.url" target="_blank" rel="noopener noreferrer">
+                {{ vehicle.name }}
+              </a>
+            </p>
+          }
+        }
+
+        <h2>Starships</h2>
+
+        @for (starship of starships.value() ?? []; track starship.uid) {
+          @if (currentPerson.starships?.includes(starship.url)) {
+            <p>
+              <a [href]="starship.url" target="_blank" rel="noopener noreferrer">
+                {{ starship.name }}
+              </a>
+            </p>
+          }
+        }
+
+      </div>
+
+    </div>
+
+  } @else {
+
+    <div class="person-details">
+      <h1>Loading character...</h1>
+    </div>
+
+  }
+</section>
