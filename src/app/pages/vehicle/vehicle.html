@@ -1,0 +1,99 @@
+@if (currentVehicle) {
+
+  <div class="person-details">
+
+    <h1>{{ currentVehicle.name }}</h1>
+
+    <div class="info-grid">
+
+      <p>
+        <strong>Model:</strong>
+        {{ currentVehicle.model }}
+      </p>
+
+      <p>
+        <strong>Manufacturer:</strong>
+        {{ currentVehicle.manufacturer }}
+      </p>
+
+      <p>
+        <strong>Cost:</strong>
+        {{ currentVehicle.cost_in_credits }}
+      </p>
+
+      <p>
+        <strong>Length:</strong>
+        {{ currentVehicle.length }}
+      </p>
+
+      <p>
+        <strong>Max Atmosphering Speed:</strong>
+        {{ currentVehicle.max_atmosphering_speed }}
+      </p>
+
+      <p>
+        <strong>Crew:</strong>
+        {{ currentVehicle.crew }}
+      </p>
+
+      <p>
+        <strong>Passengers:</strong>
+        {{ currentVehicle.passengers }}
+      </p>
+
+      <p>
+        <strong>Cargo Capacity:</strong>
+        {{ currentVehicle.cargo_capacity }}
+      </p>
+
+      <p>
+        <strong>Consumables:</strong>
+        {{ currentVehicle.consumables }}
+      </p>
+
+      <p>
+        <strong>Vehicle Class:</strong>
+        {{ currentVehicle.vehicle_class }}
+      </p>
+
+    </div>
+
+    <h2>Films</h2>
+
+    <div class="films-container">
+
+      @for (film of films.value() ?? []; track film.uid) {
+        @if (currentVehicle.films?.includes(film.url)) {
+
+          <div
+            class="film-card"
+            [routerLink]="[
+              '/episode',
+              toSlug(film.properties?.title ?? film.title)
+            ]">
+
+            <h2>
+              {{ film.properties?.title ?? film.title }}
+            </h2>
+
+            <p>
+              Episode
+              {{ film.properties?.episode_id ?? film.episode_id }}
+            </p>
+
+          </div>
+
+        }
+      }
+
+    </div>
+
+  </div>
+
+} @else {
+
+  <div class="person-details">
+    <h1>Loading vehicle...</h1>
+  </div>
+
+}

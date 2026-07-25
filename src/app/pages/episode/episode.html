@@ -21,11 +21,10 @@
 @for (person of people.value() ?? []; track person.uid) {
   @if (person.films?.includes(currentFilm.url)) {
     <p>
-<a [routerLink]="['/people', getPersonId(person.url)]">
+<a [routerLink]="['/person', getId(person.url)]">
   {{ person.name }}
 </a>
     </p>
-
 
   }
 }
@@ -34,9 +33,9 @@
 @for (planet of planets.value() ?? []; track planet.uid) {
   @if (planet.films?.includes(currentFilm.url)) {
     <p>
-  
-        {{ planet.name }}
-
+     <a [routerLink]="['/planet', getId(planet.url)]">
+  {{ planet.name }}
+</a>
     </p>
   }
 }
@@ -44,10 +43,10 @@
 <h2>Species</h2>
 @for (specie of species.value() ?? []; track specie.uid) {
   @if (specie.films?.includes(currentFilm.url)) {
-    <p>
-      <a [href]="specie.url" target="_blank" rel="noopener noreferrer">
-        {{ specie.name }}
-      </a>
+     <p>
+     <a [routerLink]="['/specie', getId(specie.url)]">
+  {{ specie.name }}
+</a>
     </p>
   }
 }
@@ -55,10 +54,10 @@
 <h2>Vehicles</h2>
 @for (vehicle of vehicles.value() ?? []; track vehicle.uid) {
   @if (vehicle.films?.includes(currentFilm.url)) {
-    <p>
-      <a [href]="vehicle.url" target="_blank" rel="noopener noreferrer">
-        {{ vehicle.name }}
-      </a>
+   <p>
+     <a [routerLink]="['/vehicle', getId(vehicle.url)]">
+  {{ vehicle.name }}
+</a>
     </p>
   }
 }
@@ -66,10 +65,10 @@
 <h2>Starships</h2>
 @for (starship of starships.value() ?? []; track starship.uid) {
   @if (starship.films?.includes(currentFilm.url)) {
-    <p>
-      <a [href]="starship.url" target="_blank" rel="noopener noreferrer">
-        {{ starship.name }}
-      </a>
+   <p>
+     <a [routerLink]="['/starship', getId(starship.url)]">
+  {{ starship.name }}
+</a>
     </p>
   }
 }

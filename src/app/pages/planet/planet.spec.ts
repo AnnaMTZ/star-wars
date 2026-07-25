@@ -2,23 +2,23 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { Episode } from './episode';
+import { Planet } from './planet';
 import { landingService } from '../../services/landing.service/landing.service';
 
-describe('Episode', () => {
-  let component: Episode;
-  let fixture: ComponentFixture<Episode>;
+describe('Planet', () => {
+  let component: Planet;
+  let fixture: ComponentFixture<Planet>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Episode],
+      imports: [Planet],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
               paramMap: {
-                get: () => 'a-new-hope',
+                get: () => '1',
               },
             },
           },
@@ -26,18 +26,14 @@ describe('Episode', () => {
         {
           provide: landingService,
           useValue: {
-            getFilms: () => of([]),
             getPlanets: () => of([]),
-            getPeople: () => of([]),
-            getSpecies: () => of([]),
-            getVehicles: () => of([]),
-            getStarships: () => of([]),
+            getFilms: () => of([]),
           },
         },
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Episode);
+    fixture = TestBed.createComponent(Planet);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -46,17 +42,12 @@ describe('Episode', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have episode name from route', () => {
-    expect(component.episodeName).toBe('a-new-hope');
+  it('should create a slug', () => {
+    expect(component.toSlug('A New Hope'))
+      .toBe('a-new-hope');
   });
 
-  it('should generate background image path', () => {
-    expect(component.backgroundImage)
-      .toContain('a-new-hope');
-  });
-
-  it('should return a background style', () => {
-    expect(component.backgroundStyle)
-      .toContain('url(');
+  it('should return null when no planets are loaded', () => {
+    expect(component.currentPlanet).toBeNull();
   });
 });

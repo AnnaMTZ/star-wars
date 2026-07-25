@@ -53,7 +53,8 @@ people = rxResource({
     stream: () => this.swapiService.getStarships(),
   });
 
-getPersonId(url: string): string {
+
+getId(url: string): string {
   return url.split('/').pop() ?? '';
 }
 

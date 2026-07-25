@@ -1,0 +1,75 @@
+@if (currentPlanet) {
+
+  <div class="person-details">
+
+    <h1>{{ currentPlanet.name }}</h1>
+
+    <div class="info-grid">
+
+      <p><strong>Rotation Period:</strong> {{ currentPlanet.rotation_period }}</p>
+
+      <p><strong>Orbital Period:</strong> {{ currentPlanet.orbital_period }}</p>
+
+      <p><strong>Diameter:</strong> {{ currentPlanet.diameter }}</p>
+
+      <p><strong>Climate:</strong> {{ currentPlanet.climate }}</p>
+
+      <p><strong>Gravity:</strong> {{ currentPlanet.gravity }}</p>
+
+      <p><strong>Terrain:</strong> {{ currentPlanet.terrain }}</p>
+
+      <p><strong>Surface Water:</strong> {{ currentPlanet.surface_water }}</p>
+
+      <p><strong>Population:</strong> {{ currentPlanet.population }}</p>
+
+   
+
+<h2>Films</h2>
+
+@if (currentPlanet?.films?.length) {
+
+  <div class="films-container">
+
+    @for (film of films.value() ?? []; track film.uid) {
+      @if (currentPlanet.films?.includes(film.url)) {
+
+        <div
+          class="film-card"
+          [routerLink]="['/episode', toSlug(film.title)]">
+
+          <h2>{{ film.title }}</h2>
+
+          <p>Episode {{ film.episode_id }}</p>
+
+          <p>{{ film.release_date }}</p>
+
+        </div>
+
+      }
+    }
+
+  </div>
+
+} @else {
+
+  <div class="films-container">
+
+    <div
+      class="film-card"
+      routerLink="/">
+
+      <h2>No Related Films Found</h2>
+
+      <p>Return to Landing Page</p>
+
+    </div>
+
+  </div>
+
+}
+
+    </div>
+
+  </div>
+
+} 

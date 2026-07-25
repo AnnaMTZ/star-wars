@@ -2,23 +2,23 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { Episode } from './episode';
+import { Starship } from './starship';
 import { landingService } from '../../services/landing.service/landing.service';
 
-describe('Episode', () => {
-  let component: Episode;
-  let fixture: ComponentFixture<Episode>;
+describe('Starship', () => {
+  let component: Starship;
+  let fixture: ComponentFixture<Starship>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Episode],
+      imports: [Starship],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
               paramMap: {
-                get: () => 'a-new-hope',
+                get: () => '1',
               },
             },
           },
@@ -26,18 +26,14 @@ describe('Episode', () => {
         {
           provide: landingService,
           useValue: {
-            getFilms: () => of([]),
-            getPlanets: () => of([]),
-            getPeople: () => of([]),
-            getSpecies: () => of([]),
-            getVehicles: () => of([]),
             getStarships: () => of([]),
+            getFilms: () => of([]),
           },
         },
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Episode);
+    fixture = TestBed.createComponent(Starship);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -46,17 +42,18 @@ describe('Episode', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have episode name from route', () => {
-    expect(component.episodeName).toBe('a-new-hope');
+  it('should create a slug', () => {
+    expect(component.toSlug('A New Hope'))
+      .toBe('a-new-hope');
   });
 
-  it('should generate background image path', () => {
-    expect(component.backgroundImage)
-      .toContain('a-new-hope');
+  it('should extract film id from url', () => {
+    expect(
+      component.getFilmId('https://swapi.info/api/films/1')
+    ).toBe('1');
   });
 
-  it('should return a background style', () => {
-    expect(component.backgroundStyle)
-      .toContain('url(');
+  it('should return null when no starships are loaded', () => {
+    expect(component.currentStarship).toBeNull();
   });
 });

@@ -9,13 +9,33 @@ import { tap } from 'rxjs/operators';
 export class landingService {
   private http = inject(HttpClient);
 
+  // used in episode //
+getPerson(id: string) {
+  return this.http.get(`${environment.apiUrl}/people/${id}`);
+}  
+
+getPlanet(id: string) {
+  return this.http.get(`${environment.apiUrl}/planets/${id}`);
+}
+
+getSpecie(id: string) {
+  return this.http.get(`${environment.apiUrl}/species/${id}`);
+}
+
+getVehicle(id: string) {
+  return this.http.get(`${environment.apiUrl}/vehicles/${id}`);
+}
+
+getStarship(id: string) {
+  return this.http.get(`${environment.apiUrl}/starship/${id}`);
+}
+
+/// 
   getPeople() {
     return this.http.get(`${environment.apiUrl}/people`).pipe(tap((data: any) => console.log(data)));
   }
 
-getPerson(id: string) {
-  return this.http.get(`${environment.apiUrl}/people/${id}`);
-}
+
 
   getFilms() {
   return this.http.get<any[]>(
@@ -30,6 +50,7 @@ getByUrl(url: string) {
   getPlanets() {
     return this.http.get<any[]>(`${environment.apiUrl}/planets`);
   }
+
 
   getSpecies() {
     return this.http.get<any[]>(`${environment.apiUrl}/species`);

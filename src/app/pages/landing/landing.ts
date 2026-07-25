@@ -1,13 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-
-interface Film {
-  title: string;
-  episode_id: number;
-  release_date: string;
-}
+import { rxResource } from '@angular/core/rxjs-interop';
+import { landingService } from '../../services/landing.service/landing.service';
 
 @Component({
   selector: 'app-landing',
@@ -17,19 +12,11 @@ interface Film {
   styleUrls: ['./landing.scss']
 })
 export class Landing {
-  private http = inject(HttpClient);
+  private swapiService = inject(landingService);
 
-  films: Film[] = [];
-
-  ngOnInit() {
-    this.http
-      .get<{ results: Film[] }>('https://swapi.dev/api/films/')
-      .subscribe(response => {
-        this.films = response.results.sort(
-          (a, b) => a.episode_id - b.episode_id
-        );
-      });
-  }
+  readonly films = rxResource({
+    stream: () => this.swapiService.getFilms(),
+  });
 
   toSlug(title: string): string {
     return title

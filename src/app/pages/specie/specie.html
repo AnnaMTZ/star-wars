@@ -1,0 +1,95 @@
+@if (currentSpecie) {
+
+  <div class="person-details">
+
+    <h1>{{ currentSpecie.name }}</h1>
+
+    <div class="info-grid">
+
+      <p>
+        <strong>Classification:</strong>
+        {{ currentSpecie.classification }}
+      </p>
+
+      <p>
+        <strong>Designation:</strong>
+        {{ currentSpecie.designation }}
+      </p>
+
+      <p>
+        <strong>Average Height:</strong>
+        {{ currentSpecie.average_height }}
+      </p>
+
+      <p>
+        <strong>Skin Colors:</strong>
+        {{ currentSpecie.skin_colors }}
+      </p>
+
+      <p>
+        <strong>Hair Colors:</strong>
+        {{ currentSpecie.hair_colors }}
+      </p>
+
+      <p>
+        <strong>Eye Colors:</strong>
+        {{ currentSpecie.eye_colors }}
+      </p>
+
+      <p>
+        <strong>Average Lifespan:</strong>
+        {{ currentSpecie.average_lifespan }}
+      </p>
+
+      <p>
+        <strong>Language:</strong>
+        {{ currentSpecie.language }}
+      </p>
+
+    </div>
+
+    <h2>Films</h2>
+
+    <div class="films-container">
+
+      @for (film of films.value() ?? []; track film.uid) {
+
+        @if (currentSpecie.films?.includes(film.url)) {
+
+          <div
+            class="film-card"
+            [routerLink]="[
+              '/episode',
+              toSlug(film.properties?.title ?? film.title)
+            ]">
+
+            <h2>
+              {{ film.properties?.title ?? film.title }}
+            </h2>
+
+            <p>
+              Episode
+              {{ film.properties?.episode_id ?? film.episode_id }}
+            </p>
+
+            <p>
+              {{ film.properties?.release_date ?? film.release_date }}
+            </p>
+
+          </div>
+
+        }
+
+      }
+
+    </div>
+
+  </div>
+
+} @else {
+
+  <div class="person-details">
+    <h1>Loading species...</h1>
+  </div>
+
+}

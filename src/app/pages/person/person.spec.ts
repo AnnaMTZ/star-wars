@@ -2,23 +2,23 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { Episode } from './episode';
+import { Person } from './person';
 import { landingService } from '../../services/landing.service/landing.service';
 
-describe('Episode', () => {
-  let component: Episode;
-  let fixture: ComponentFixture<Episode>;
+describe('Person', () => {
+  let component: Person;
+  let fixture: ComponentFixture<Person>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Episode],
+      imports: [Person],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
               paramMap: {
-                get: () => 'a-new-hope',
+                get: () => '1',
               },
             },
           },
@@ -26,9 +26,8 @@ describe('Episode', () => {
         {
           provide: landingService,
           useValue: {
-            getFilms: () => of([]),
-            getPlanets: () => of([]),
             getPeople: () => of([]),
+            getPlanets: () => of([]),
             getSpecies: () => of([]),
             getVehicles: () => of([]),
             getStarships: () => of([]),
@@ -37,7 +36,7 @@ describe('Episode', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Episode);
+    fixture = TestBed.createComponent(Person);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -46,17 +45,13 @@ describe('Episode', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have episode name from route', () => {
-    expect(component.episodeName).toBe('a-new-hope');
+  it('should extract id from url', () => {
+    expect(
+      component.getId('https://swapi.info/api/people/1')
+    ).toBe('1');
   });
 
-  it('should generate background image path', () => {
-    expect(component.backgroundImage)
-      .toContain('a-new-hope');
-  });
-
-  it('should return a background style', () => {
-    expect(component.backgroundStyle)
-      .toContain('url(');
+  it('should return null when no people are loaded', () => {
+    expect(component.currentPerson).toBeNull();
   });
 });
