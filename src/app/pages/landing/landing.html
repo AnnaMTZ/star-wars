@@ -1,19 +1,14 @@
 <section class="content">
 
+  <h1>Welkom to the Star Wars Universe!</h1>
+  <h2>Check the episodes</h2>
   <div class="films-container">
-
     @for (film of films.value() ?? []; track film.uid) {
-
       <div
         class="film-card"
         [routerLink]="['/episode', toSlug(film.title)]">
-
         <h2>{{ film.title }}</h2>
-
       </div>
-
     }
-
   </div>
-
 </section>

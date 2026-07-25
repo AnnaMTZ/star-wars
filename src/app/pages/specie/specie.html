@@ -50,39 +50,59 @@
 
     <h2>Films</h2>
 
-    <div class="films-container">
+    @if (currentSpecie?.films?.length) {
 
-      @for (film of films.value() ?? []; track film.uid) {
+      <div class="films-container">
 
-        @if (currentSpecie.films?.includes(film.url)) {
+        @for (film of films.value() ?? []; track film.url) {
 
-          <div
-            class="film-card"
-            [routerLink]="[
-              '/episode',
-              toSlug(film.properties?.title ?? film.title)
-            ]">
+          @if (currentSpecie.films?.includes(film.url)) {
 
-            <h2>
-              {{ film.properties?.title ?? film.title }}
-            </h2>
+            <div
+              class="film-card"
+              [routerLink]="[
+                '/episode',
+                toSlug(film.properties?.title ?? film.title)
+              ]">
 
-            <p>
-              Episode
-              {{ film.properties?.episode_id ?? film.episode_id }}
-            </p>
+              <h2>
+                {{ film.properties?.title ?? film.title }}
+              </h2>
 
-            <p>
-              {{ film.properties?.release_date ?? film.release_date }}
-            </p>
+              <p>
+                Episode
+                {{ film.properties?.episode_id ?? film.episode_id }}
+              </p>
 
-          </div>
+              <p>
+                {{ film.properties?.release_date ?? film.release_date }}
+              </p>
+
+            </div>
+
+          }
 
         }
 
-      }
+      </div>
 
-    </div>
+    } @else {
+
+      <div class="films-container">
+
+        <div
+          class="film-card"
+          [routerLink]="['/']">
+
+          <h2>No Related Films Found</h2>
+
+          <p>Return to Landing Page</p>
+
+        </div>
+
+      </div>
+
+    }
 
   </div>
 

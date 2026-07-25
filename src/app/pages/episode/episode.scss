@@ -1,79 +1,115 @@
 
-  section {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
+.film-details {
   padding: 2rem;
-  font-family: "Star Jedi", Arial, sans-serif;
-  color: #feda4a;
-
-
-text-shadow:
-  -2px -2px 0 #000,
-   2px -2px 0 #000,
-  -2px  2px 0 #000,
-   2px  2px 0 #000,
-   0    0   10px #000,
-   0    0   20px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  color: #fff;
+  z-index: 2;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0.6),
+      rgba(0, 0, 0, 0.8)
+    );
 }
 
-section::before { background: rgba(0, 0, 0, 0.85);}
-section > div,
-section p {
-  width: 100%;
-  max-width: 900px;
-}
-
-section > div {
-  display: grid;
-  gap: 0.75rem;
-  align-items: center;
-}
-
-section div div:first-child {
-  font-size: 2rem;
-  font-weight: 700;
-color: #feda4a;
-
-text-shadow:
-  -2px -2px 0 #000,
-   2px -2px 0 #000,
-  -2px  2px 0 #000,
-   2px  2px 0 #000,
-   0    0   10px #000,
-   0    0   20px rgba(0, 0, 0, 0.8);
-}
-
-.film-info {
+.entity-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
+
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 1rem auto 2rem;
 }
 
-.film-info h1,
-.film-info h2 {
-  grid-column: 1 / -1;
-  margin: 0.5rem 0;
-}
+.entity-tile {
+  background: rgba(31, 41, 55, 0.95);
+  border: 1px solid rgba(255, 232, 31, 0.3);
 
-.film-info p {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 0.75rem;
+  border-radius: 12px;
   padding: 1rem;
-  margin: 0;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+  text-align: center;
+  color: #ffe81f;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
-@media (max-width: 720px) {
-  section {
-    padding: 1.5rem;
-  }
+.entity-tile:hover {
+  transform: translateY(-4px);
+  background: rgba(44, 58, 82, 1);
 
-  section div div {
-    padding: 0.75rem;
-  }
+  box-shadow:
+    0 8px 18px rgba(255, 232, 31, 0.25);
+}
+
+.film-details h1,
+.film-details h2 {
+  color: #ffe81f;
+}
+
+.film-details h2 {
+  margin-top: 2rem;
+}
+
+
+
+.entity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 1rem auto 2rem;
+}
+
+.entity-tile {
+  background: rgba(31, 41, 55, 0.95);
+  border: 1px solid rgba(255, 232, 31, 0.3);
+
+  border-radius: 12px;
+
+  padding: 1rem;
+
+  text-align: center;
+  color: #ffe81f;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.entity-tile:hover {
+  transform: translateY(-4px);
+
+  background: rgba(44, 58, 82, 1);
+
+  box-shadow:
+    0 8px 18px rgba(255, 232, 31, 0.25);
+}
+
+.entity-tile:active {
+  transform: translateY(-2px);
+}
+
+section h2 {
+  text-align: center;
+  color: #ffe81f;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }

@@ -1,77 +1,129 @@
-<section
+<section class="section"
   [style.background-image]="backgroundStyle"
-  style="background-size: cover; background-position: center;"
->
+  style="background-size: cover; background-position: center;">
+
   @if (currentFilm) {
+
+    <div class="film-details">
 
       <h1>{{ currentFilm.properties?.title ?? currentFilm.title }}</h1>
 
-      <h3>Episode {{ currentFilm.properties?.episode_id ?? currentFilm.episode_id }}</h3>
+      <h3>
+        Episode
+        {{ currentFilm.properties?.episode_id ?? currentFilm.episode_id }}
+      </h3>
 
-      <h3>{{ currentFilm.properties?.opening_crawl ?? currentFilm.opening_crawl }}</h3>
+      <h3>
+        {{ currentFilm.properties?.opening_crawl ?? currentFilm.opening_crawl }}
+      </h3>
 
-      <p>Director: {{ currentFilm.properties?.director ?? currentFilm.director }}</p>
+      <p>
+        Director:
+        {{ currentFilm.properties?.director ?? currentFilm.director }}
+      </p>
 
-      <p>Producer: {{ currentFilm.properties?.producer ?? currentFilm.producer }}</p>
+      <p>
+        Producer:
+        {{ currentFilm.properties?.producer ?? currentFilm.producer }}
+      </p>
 
-      <p>Release Date:
+      <p>
+        Release Date:
         {{ currentFilm.properties?.release_date ?? currentFilm.release_date }}
       </p>
- <h2>Characters</h2>
-@for (person of people.value() ?? []; track person.uid) {
-  @if (person.films?.includes(currentFilm.url)) {
-    <p>
-<a [routerLink]="['/person', getId(person.url)]">
-  {{ person.name }}
-</a>
-    </p>
+
+      <h2>Characters</h2>
+
+      <div class="entity-grid">
+        @for (person of people.value() ?? []; track person.url) {
+          @if (person.films?.includes(currentFilm.url)) {
+
+            <div
+              class="entity-tile"
+              [routerLink]="['/person', getId(person.url)]">
+
+              {{ person.name }}
+
+            </div>
+
+          }
+        }
+      </div>
+
+      <h2>Planets</h2>
+
+      <div class="entity-grid">
+        @for (planet of planets.value() ?? []; track planet.url) {
+          @if (planet.films?.includes(currentFilm.url)) {
+
+            <div
+              class="entity-tile"
+              [routerLink]="['/planet', getId(planet.url)]">
+
+              {{ planet.name }}
+
+            </div>
+
+          }
+        }
+      </div>
+
+      <h2>Species</h2>
+
+      <div class="entity-grid">
+        @for (specie of species.value() ?? []; track specie.url) {
+          @if (specie.films?.includes(currentFilm.url)) {
+
+            <div
+              class="entity-tile"
+              [routerLink]="['/specie', getId(specie.url)]">
+
+              {{ specie.name }}
+
+            </div>
+
+          }
+        }
+      </div>
+
+      <h2>Vehicles</h2>
+
+      <div class="entity-grid">
+        @for (vehicle of vehicles.value() ?? []; track vehicle.url) {
+          @if (vehicle.films?.includes(currentFilm.url)) {
+
+            <div
+              class="entity-tile"
+              [routerLink]="['/vehicle', getId(vehicle.url)]">
+
+              {{ vehicle.name }}
+
+            </div>
+
+          }
+        }
+      </div>
+
+      <h2>Starships</h2>
+
+      <div class="entity-grid">
+        @for (starship of starships.value() ?? []; track starship.url) {
+          @if (starship.films?.includes(currentFilm.url)) {
+
+            <div
+              class="entity-tile"
+              [routerLink]="['/starship', getId(starship.url)]">
+
+              {{ starship.name }}
+
+            </div>
+
+          }
+        }
+      </div>
+
+    </div>
 
   }
-}
 
-<h2>Planets</h2>
-@for (planet of planets.value() ?? []; track planet.uid) {
-  @if (planet.films?.includes(currentFilm.url)) {
-    <p>
-     <a [routerLink]="['/planet', getId(planet.url)]">
-  {{ planet.name }}
-</a>
-    </p>
-  }
-}
-
-<h2>Species</h2>
-@for (specie of species.value() ?? []; track specie.uid) {
-  @if (specie.films?.includes(currentFilm.url)) {
-     <p>
-     <a [routerLink]="['/specie', getId(specie.url)]">
-  {{ specie.name }}
-</a>
-    </p>
-  }
-}
-
-<h2>Vehicles</h2>
-@for (vehicle of vehicles.value() ?? []; track vehicle.uid) {
-  @if (vehicle.films?.includes(currentFilm.url)) {
-   <p>
-     <a [routerLink]="['/vehicle', getId(vehicle.url)]">
-  {{ vehicle.name }}
-</a>
-    </p>
-  }
-}
-
-<h2>Starships</h2>
-@for (starship of starships.value() ?? []; track starship.uid) {
-  @if (starship.films?.includes(currentFilm.url)) {
-   <p>
-     <a [routerLink]="['/starship', getId(starship.url)]">
-  {{ starship.name }}
-</a>
-    </p>
-  }
-}
-
-  }
 </section>
