@@ -61,7 +61,7 @@ getId(url: string): string {
 get currentFilm(): any | null {
   const films = this.films.value();
 
-  if (!films) {
+  if (!Array.isArray(films)) {
     return null;
   }
 

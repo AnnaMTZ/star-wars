@@ -55,18 +55,19 @@ getId(url: string): string {
   return url.split('/').pop() ?? '';
 }
 
-  get currentPerson(): any | null {
-    const people = this.people.value();
+get currentPerson(): any | null {
+  const people = this.people.value();
 
-    if (!people) {
-      return null;
-    }
 
-    return (
-      people.find((person: any) => {
-        const id = person.url?.split('/').filter(Boolean).pop();
-        return id === this.personId;
-      }) ?? null
-    );
+  if (!Array.isArray(people)) {
+    return null;
   }
+
+  return (
+    people.find((person: any) => {
+      const id = person.url?.split('/').filter(Boolean).pop();
+      return id === this.personId;
+    }) ?? null
+  );
+}
 }

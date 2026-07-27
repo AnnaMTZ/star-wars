@@ -1,51 +1,54 @@
-<section class="section"
+<section
+  class="section"
   [style.background-image]="backgroundStyle"
-  style="background-size: cover; background-position: center;">
-
-  @if (currentFilm) {
+  style="background-size: cover; background-position: center;"
+>
+  @if (currentFilm; as film) {
 
     <div class="film-details">
 
-      <h1>{{ currentFilm.properties?.title ?? currentFilm.title }}</h1>
+      <h1>{{ film.properties?.title ?? film.title }}</h1>
 
       <h3>
         Episode
-        {{ currentFilm.properties?.episode_id ?? currentFilm.episode_id }}
+        {{ film.properties?.episode_id ?? film.episode_id }}
       </h3>
 
       <h3>
-        {{ currentFilm.properties?.opening_crawl ?? currentFilm.opening_crawl }}
+        {{ film.properties?.opening_crawl ?? film.opening_crawl }}
       </h3>
 
       <p>
         Director:
-        {{ currentFilm.properties?.director ?? currentFilm.director }}
+        {{ film.properties?.director ?? film.director }}
       </p>
 
       <p>
         Producer:
-        {{ currentFilm.properties?.producer ?? currentFilm.producer }}
+        {{ film.properties?.producer ?? film.producer }}
       </p>
 
       <p>
         Release Date:
-        {{ currentFilm.properties?.release_date ?? currentFilm.release_date }}
+        {{ film.properties?.release_date ?? film.release_date }}
       </p>
+
+      @let peopleList = $any(people.value());
+      @let planetsList = $any(planets.value());
+      @let speciesList = $any(species.value());
+      @let vehiclesList = $any(vehicles.value());
+      @let starshipsList = $any(starships.value());
 
       <h2>Characters</h2>
 
       <div class="entity-grid">
-        @for (person of people.value() ?? []; track person.url) {
-          @if (person.films?.includes(currentFilm.url)) {
-
+        @for (person of peopleList || []; track person.url) {
+          @if (person.films?.includes(film.url)) {
             <div
               class="entity-tile"
               [routerLink]="['/person', getId(person.url)]">
-
               {{ person.name }}
-
             </div>
-
           }
         }
       </div>
@@ -53,17 +56,13 @@
       <h2>Planets</h2>
 
       <div class="entity-grid">
-        @for (planet of planets.value() ?? []; track planet.url) {
-          @if (planet.films?.includes(currentFilm.url)) {
-
+        @for (planet of planetsList || []; track planet.url) {
+          @if (planet.films?.includes(film.url)) {
             <div
               class="entity-tile"
               [routerLink]="['/planet', getId(planet.url)]">
-
               {{ planet.name }}
-
             </div>
-
           }
         }
       </div>
@@ -71,17 +70,13 @@
       <h2>Species</h2>
 
       <div class="entity-grid">
-        @for (specie of species.value() ?? []; track specie.url) {
-          @if (specie.films?.includes(currentFilm.url)) {
-
+        @for (specie of speciesList || []; track specie.url) {
+          @if (specie.films?.includes(film.url)) {
             <div
               class="entity-tile"
               [routerLink]="['/specie', getId(specie.url)]">
-
               {{ specie.name }}
-
             </div>
-
           }
         }
       </div>
@@ -89,17 +84,13 @@
       <h2>Vehicles</h2>
 
       <div class="entity-grid">
-        @for (vehicle of vehicles.value() ?? []; track vehicle.url) {
-          @if (vehicle.films?.includes(currentFilm.url)) {
-
+        @for (vehicle of vehiclesList || []; track vehicle.url) {
+          @if (vehicle.films?.includes(film.url)) {
             <div
               class="entity-tile"
               [routerLink]="['/vehicle', getId(vehicle.url)]">
-
               {{ vehicle.name }}
-
             </div>
-
           }
         }
       </div>
@@ -107,17 +98,13 @@
       <h2>Starships</h2>
 
       <div class="entity-grid">
-        @for (starship of starships.value() ?? []; track starship.url) {
-          @if (starship.films?.includes(currentFilm.url)) {
-
+        @for (starship of starshipsList || []; track starship.url) {
+          @if (starship.films?.includes(film.url)) {
             <div
               class="entity-tile"
               [routerLink]="['/starship', getId(starship.url)]">
-
               {{ starship.name }}
-
             </div>
-
           }
         }
       </div>
@@ -125,5 +112,4 @@
     </div>
 
   }
-
 </section>

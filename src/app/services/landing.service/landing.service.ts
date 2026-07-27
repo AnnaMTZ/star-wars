@@ -9,7 +9,6 @@ import { tap } from 'rxjs/operators';
 export class landingService {
   private http = inject(HttpClient);
 
-  // used in episode //
 getPerson(id: string) {
   return this.http.get(`${environment.apiUrl}/people/${id}`);
 }  
@@ -30,12 +29,10 @@ getStarship(id: string) {
   return this.http.get(`${environment.apiUrl}/starship/${id}`);
 }
 
-/// 
-  getPeople() {
-    return this.http.get(`${environment.apiUrl}/people`).pipe(tap((data: any) => console.log(data)));
-  }
 
-
+getPeople() {
+  return this.http.get(`${environment.apiUrl}/people`);
+}
 
   getFilms() {
   return this.http.get<any[]>(
