@@ -74,7 +74,7 @@
 
 @if (currentStarship.films?.length) {
 
-  @for (film of films.value() ?? []; track film.uid) {
+  @for (film of films.value() ?? []; track film.url) {
     @if (currentStarship.films?.includes(film.url)) {
 
       <div

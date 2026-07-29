@@ -30,7 +30,7 @@
 
   <div class="films-container">
 
-    @for (film of films.value() ?? []; track film.uid) {
+    @for (film of films.value() ?? []; track film.url) {
       @if (currentPlanet.films?.includes(film.url)) {
 
         <div
