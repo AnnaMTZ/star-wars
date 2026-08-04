@@ -4,6 +4,8 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
+
 
 interface EpisodeFact {
   title: string;
@@ -21,7 +23,6 @@ export class Episode {
   private swapiService = inject(landingService);
   private route = inject(ActivatedRoute);
 
-
   readonly episodeName =
     this.route.snapshot.paramMap.get('movie') ?? '';
 
@@ -29,29 +30,67 @@ export class Episode {
   showCrawl = true;
   showFilmInfo = false;
 
-  films = rxResource({
-    stream: () => this.swapiService.getFilms(),
-  });
 
-  planets = rxResource({
-    stream: () => this.swapiService.getPlanets(),
-  });
+
+films = rxResource({
+  stream: () =>
+    this.swapiService.getFilms().pipe(
+      catchError(error => {
+        console.error('Failed to load films', error);
+        return throwError(() => error);
+      })
+    ),
+});
+
+planets = rxResource({
+  stream: () =>
+    this.swapiService.getPlanets().pipe(
+      catchError(error => {
+        console.error('Failed to load planets', error);
+        return throwError(() => error);
+      })
+    ),
+});
 
 people = rxResource({
-    stream: () => this.swapiService.getPeople(),
-  });
+  stream: () =>
+    this.swapiService.getPeople().pipe(
+      catchError(error => {
+        console.error('Failed to load people', error);
+        return throwError(() => error);
+      })
+    ),
+});
 
-  species = rxResource({
-    stream: () => this.swapiService.getSpecies(),
-  });
+species = rxResource({
+  stream: () =>
+    this.swapiService.getSpecies().pipe(
+      catchError(error => {
+        console.error('Failed to load species', error);
+        return throwError(() => error);
+      })
+    ),
+});
 
-  vehicles = rxResource({
-    stream: () => this.swapiService.getVehicles(),
-  });
+vehicles = rxResource({
+  stream: () =>
+    this.swapiService.getVehicles().pipe(
+      catchError(error => {
+        console.error('Failed to load vehicles', error);
+        return throwError(() => error);
+      })
+    ),
+});
 
-  starships = rxResource({
-    stream: () => this.swapiService.getStarships(),
-  });
+starships = rxResource({
+  stream: () =>
+    this.swapiService.getStarships().pipe(
+      catchError(error => {
+        console.error('Failed to load starships', error);
+        return throwError(() => error);
+      })
+    ),
+});
 
 
 getId(url: string): string {

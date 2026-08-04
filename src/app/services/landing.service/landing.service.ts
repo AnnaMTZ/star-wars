@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environment';
-import { tap } from 'rxjs/operators';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,55 +9,89 @@ import { tap } from 'rxjs/operators';
 export class landingService {
   private http = inject(HttpClient);
 
-getPerson(id: string) {
-  return this.http.get(`${environment.apiUrl}/people/${id}`);
-}  
+  private handleError(error: HttpErrorResponse) {
+    console.error('API Error:', error);
 
-getPlanet(id: string) {
-  return this.http.get(`${environment.apiUrl}/planets/${id}`);
-}
+    let errorMessage = 'An unexpected error occurred';
 
-getSpecie(id: string) {
-  return this.http.get(`${environment.apiUrl}/species/${id}`);
-}
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = error.error.message;
+    } else {
+      errorMessage = `Error ${error.status}: ${error.message}`;
+    }
 
-getVehicle(id: string) {
-  return this.http.get(`${environment.apiUrl}/vehicles/${id}`);
-}
-
-getStarship(id: string) {
-  return this.http.get(`${environment.apiUrl}/starship/${id}`);
-}
-
-
-getPeople() {
-  return this.http.get(`${environment.apiUrl}/people`);
-}
-
-  getFilms() {
-  return this.http.get<any[]>(
-    `${environment.apiUrl}/films`
-  );
-}
-
-getByUrl(url: string) {
-  return this.http.get<any>(url);
-}
-
-  getPlanets() {
-    return this.http.get<any[]>(`${environment.apiUrl}/planets`);
+    return throwError(() => new Error(errorMessage));
   }
 
+  getPerson(id: string) {
+    return this.http
+      .get(`${environment.apiUrl}/people/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getPlanet(id: string) {
+    return this.http
+      .get(`${environment.apiUrl}/planets/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getSpecie(id: string) {
+    return this.http
+      .get(`${environment.apiUrl}/species/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getVehicle(id: string) {
+    return this.http
+      .get(`${environment.apiUrl}/vehicles/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getStarship(id: string) {
+    return this.http
+      .get(`${environment.apiUrl}/starship/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getPeople() {
+    return this.http
+      .get(`${environment.apiUrl}/people`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getFilms() {
+    return this.http
+      .get<any[]>(`${environment.apiUrl}/films`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getByUrl(url: string) {
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError));
+  }
+
+  getPlanets() {
+    return this.http
+      .get<any[]>(`${environment.apiUrl}/planets`)
+      .pipe(catchError(this.handleError));
+  }
 
   getSpecies() {
-    return this.http.get<any[]>(`${environment.apiUrl}/species`);
+    return this.http
+      .get<any[]>(`${environment.apiUrl}/species`)
+      .pipe(catchError(this.handleError));
   }
 
   getVehicles() {
-    return this.http.get<any[]>(`${environment.apiUrl}/vehicles`);
+    return this.http
+      .get<any[]>(`${environment.apiUrl}/vehicles`)
+      .pipe(catchError(this.handleError));
   }
 
   getStarships() {
-    return this.http.get<any[]>(`${environment.apiUrl}/starships`);
+    return this.http
+      .get<any[]>(`${environment.apiUrl}/starships`)
+      .pipe(catchError(this.handleError));
   }
 }

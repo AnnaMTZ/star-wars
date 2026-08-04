@@ -41,73 +41,103 @@
 
       <h2>Characters</h2>
 
-      <div class="entity-grid">
-        @for (person of peopleList || []; track person.url) {
-          @if (person.films?.includes(film.url)) {
-            <div
-              class="entity-tile"
-              [routerLink]="['/person', getId(person.url)]">
-              {{ person.name }}
-            </div>
+      @if (people.error()) {
+        <p class="error-message">
+          Failed to load characters.
+        </p>
+      } @else {
+        <div class="entity-grid">
+          @for (person of peopleList || []; track person.url) {
+            @if (person.films?.includes(film.url)) {
+              <div
+                class="entity-tile"
+                [routerLink]="['/person', getId(person.url)]">
+                {{ person.name }}
+              </div>
+            }
           }
-        }
-      </div>
+        </div>
+      }
 
       <h2>Planets</h2>
 
-      <div class="entity-grid">
-        @for (planet of planetsList || []; track planet.url) {
-          @if (planet.films?.includes(film.url)) {
-            <div
-              class="entity-tile"
-              [routerLink]="['/planet', getId(planet.url)]">
-              {{ planet.name }}
-            </div>
+      @if (planets.error()) {
+        <p class="error-message">
+          Failed to load planets.
+        </p>
+      } @else {
+        <div class="entity-grid">
+          @for (planet of planetsList || []; track planet.url) {
+            @if (planet.films?.includes(film.url)) {
+              <div
+                class="entity-tile"
+                [routerLink]="['/planet', getId(planet.url)]">
+                {{ planet.name }}
+              </div>
+            }
           }
-        }
-      </div>
+        </div>
+      }
 
       <h2>Species</h2>
 
-      <div class="entity-grid">
-        @for (specie of speciesList || []; track specie.url) {
-          @if (specie.films?.includes(film.url)) {
-            <div
-              class="entity-tile"
-              [routerLink]="['/specie', getId(specie.url)]">
-              {{ specie.name }}
-            </div>
+      @if (species.error()) {
+        <p class="error-message">
+          Failed to load species.
+        </p>
+      } @else {
+        <div class="entity-grid">
+          @for (specie of speciesList || []; track specie.url) {
+            @if (specie.films?.includes(film.url)) {
+              <div
+                class="entity-tile"
+                [routerLink]="['/specie', getId(specie.url)]">
+                {{ specie.name }}
+              </div>
+            }
           }
-        }
-      </div>
+        </div>
+      }
 
       <h2>Vehicles</h2>
 
-      <div class="entity-grid">
-        @for (vehicle of vehiclesList || []; track vehicle.url) {
-          @if (vehicle.films?.includes(film.url)) {
-            <div
-              class="entity-tile"
-              [routerLink]="['/vehicle', getId(vehicle.url)]">
-              {{ vehicle.name }}
-            </div>
+      @if (vehicles.error()) {
+        <p class="error-message">
+          Failed to load vehicles.
+        </p>
+      } @else {
+        <div class="entity-grid">
+          @for (vehicle of vehiclesList || []; track vehicle.url) {
+            @if (vehicle.films?.includes(film.url)) {
+              <div
+                class="entity-tile"
+                [routerLink]="['/vehicle', getId(vehicle.url)]">
+                {{ vehicle.name }}
+              </div>
+            }
           }
-        }
-      </div>
+        </div>
+      }
 
       <h2>Starships</h2>
 
-      <div class="entity-grid">
-        @for (starship of starshipsList || []; track starship.url) {
-          @if (starship.films?.includes(film.url)) {
-            <div
-              class="entity-tile"
-              [routerLink]="['/starship', getId(starship.url)]">
-              {{ starship.name }}
-            </div>
+      @if (starships.error()) {
+        <p class="error-message">
+          Failed to load starships.
+        </p>
+      } @else {
+        <div class="entity-grid">
+          @for (starship of starshipsList || []; track starship.url) {
+            @if (starship.films?.includes(film.url)) {
+              <div
+                class="entity-tile"
+                [routerLink]="['/starship', getId(starship.url)]">
+                {{ starship.name }}
+              </div>
+            }
           }
-        }
-      </div>
+        </div>
+      }
 
     </div>
 
