@@ -1,43 +1,33 @@
 <section
   class="section"
-  [style.background-image]="backgroundStyle"
+  [style.background-image]="backgroundStyle()"
   style="background-size: cover; background-position: center;"
 >
-  @if (currentFilm; as film) {
+  @if (currentFilm(); as film) {
 
     <div class="film-details">
 
-      <h1>{{ film.properties?.title ?? film.title }}</h1>
+      <h1>{{ film.title }}</h1>
 
       <h3>
-        Episode
-        {{ film.properties?.episode_id ?? film.episode_id }}
+        Episode {{ film.episodeId }}
       </h3>
 
       <h3>
-        {{ film.properties?.opening_crawl ?? film.opening_crawl }}
+        {{ film.openingCrawl }}
       </h3>
 
       <p>
-        Director:
-        {{ film.properties?.director ?? film.director }}
+        Director: {{ film.director }}
       </p>
 
       <p>
-        Producer:
-        {{ film.properties?.producer ?? film.producer }}
+        Producer: {{ film.producer }}
       </p>
 
       <p>
-        Release Date:
-        {{ film.properties?.release_date ?? film.release_date }}
+        Release Date: {{ film.releaseDate }}
       </p>
-
-      @let peopleList = $any(people.value());
-      @let planetsList = $any(planets.value());
-      @let speciesList = $any(species.value());
-      @let vehiclesList = $any(vehicles.value());
-      @let starshipsList = $any(starships.value());
 
       <h2>Characters</h2>
 
@@ -47,14 +37,14 @@
         </p>
       } @else {
         <div class="entity-grid">
-          @for (person of peopleList || []; track person.url) {
-            @if (person.films?.includes(film.url)) {
-              <div
-                class="entity-tile"
-                [routerLink]="['/person', getId(person.url)]">
-                {{ person.name }}
-              </div>
-            }
+          @for (person of characters(); track person.url) {
+            <div
+              class="entity-tile"
+              [routerLink]="['/person', getId(person.url)]">
+
+              {{ person.name }}
+
+            </div>
           }
         </div>
       }
@@ -67,14 +57,14 @@
         </p>
       } @else {
         <div class="entity-grid">
-          @for (planet of planetsList || []; track planet.url) {
-            @if (planet.films?.includes(film.url)) {
-              <div
-                class="entity-tile"
-                [routerLink]="['/planet', getId(planet.url)]">
-                {{ planet.name }}
-              </div>
-            }
+          @for (planet of filmPlanets(); track planet.url) {
+            <div
+              class="entity-tile"
+              [routerLink]="['/planet', getId(planet.url)]">
+
+              {{ planet.name }}
+
+            </div>
           }
         </div>
       }
@@ -87,14 +77,14 @@
         </p>
       } @else {
         <div class="entity-grid">
-          @for (specie of speciesList || []; track specie.url) {
-            @if (specie.films?.includes(film.url)) {
-              <div
-                class="entity-tile"
-                [routerLink]="['/specie', getId(specie.url)]">
-                {{ specie.name }}
-              </div>
-            }
+          @for (specie of filmSpecies(); track specie.url) {
+            <div
+              class="entity-tile"
+              [routerLink]="['/specie', getId(specie.url)]">
+
+              {{ specie.name }}
+
+            </div>
           }
         </div>
       }
@@ -107,14 +97,14 @@
         </p>
       } @else {
         <div class="entity-grid">
-          @for (vehicle of vehiclesList || []; track vehicle.url) {
-            @if (vehicle.films?.includes(film.url)) {
-              <div
-                class="entity-tile"
-                [routerLink]="['/vehicle', getId(vehicle.url)]">
-                {{ vehicle.name }}
-              </div>
-            }
+          @for (vehicle of filmVehicles(); track vehicle.url) {
+            <div
+              class="entity-tile"
+              [routerLink]="['/vehicle', getId(vehicle.url)]">
+
+              {{ vehicle.name }}
+
+            </div>
           }
         </div>
       }
@@ -127,14 +117,14 @@
         </p>
       } @else {
         <div class="entity-grid">
-          @for (starship of starshipsList || []; track starship.url) {
-            @if (starship.films?.includes(film.url)) {
-              <div
-                class="entity-tile"
-                [routerLink]="['/starship', getId(starship.url)]">
-                {{ starship.name }}
-              </div>
-            }
+          @for (starship of filmStarships(); track starship.url) {
+            <div
+              class="entity-tile"
+              [routerLink]="['/starship', getId(starship.url)]">
+
+              {{ starship.name }}
+
+            </div>
           }
         </div>
       }

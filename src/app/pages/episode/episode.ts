@@ -1,16 +1,14 @@
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { landingService } from '../../services/landing.service/landing.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+} from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, throwError } from 'rxjs';
-
-
-interface EpisodeFact {
-  title: string;
-  content: string;
-}
+import { landingService } from '../../services/landing.service/landing.service';
 
 @Component({
   selector: 'app-episode',
@@ -23,119 +21,207 @@ export class Episode {
   private swapiService = inject(landingService);
   private route = inject(ActivatedRoute);
 
+constructor() {
+  effect(() => {
+    console.log('Current Film:', this.currentFilm());
+  });
+}
+
+  
   readonly episodeName =
     this.route.snapshot.paramMap.get('movie') ?? '';
 
-  episodeFact?: EpisodeFact;
   showCrawl = true;
   showFilmInfo = false;
 
+  // readonly in order not to be reassigned
+  readonly films = rxResource({
+    stream: () =>
+      this.swapiService.getFilms().pipe(
+        catchError(error => {
+          console.error('Failed to load films', error);
+          return throwError(() => error);
+        })
+      ),
+  });
 
+  readonly planets = rxResource({
+    stream: () =>
+      this.swapiService.getPlanets().pipe(
+        catchError(error => {
+          console.error('Failed to load planets', error);
+          return throwError(() => error);
+        })
+      ),
+  });
 
-films = rxResource({
-  stream: () =>
-    this.swapiService.getFilms().pipe(
-      catchError(error => {
-        console.error('Failed to load films', error);
-        return throwError(() => error);
-      })
-    ),
-});
+  readonly people = rxResource({
+    stream: () =>
+      this.swapiService.getPeople().pipe(
+        catchError(error => {
+          console.error('Failed to load people', error);
+          return throwError(() => error);
+        })
+      ),
+  });
 
-planets = rxResource({
-  stream: () =>
-    this.swapiService.getPlanets().pipe(
-      catchError(error => {
-        console.error('Failed to load planets', error);
-        return throwError(() => error);
-      })
-    ),
-});
+  readonly species = rxResource({
+    stream: () =>
+      this.swapiService.getSpecies().pipe(
+        catchError(error => {
+          console.error('Failed to load species', error);
+          return throwError(() => error);
+        })
+      ),
+  });
 
-people = rxResource({
-  stream: () =>
-    this.swapiService.getPeople().pipe(
-      catchError(error => {
-        console.error('Failed to load people', error);
-        return throwError(() => error);
-      })
-    ),
-});
+  readonly vehicles = rxResource({
+    stream: () =>
+      this.swapiService.getVehicles().pipe(
+        catchError(error => {
+          console.error('Failed to load vehicles', error);
+          return throwError(() => error);
+        })
+      ),
+  });
 
-species = rxResource({
-  stream: () =>
-    this.swapiService.getSpecies().pipe(
-      catchError(error => {
-        console.error('Failed to load species', error);
-        return throwError(() => error);
-      })
-    ),
-});
+  readonly starships = rxResource({
+    stream: () =>
+      this.swapiService.getStarships().pipe(
+        catchError(error => {
+          console.error('Failed to load starships', error);
+          return throwError(() => error);
+        })
+      ),
+  });
 
-vehicles = rxResource({
-  stream: () =>
-    this.swapiService.getVehicles().pipe(
-      catchError(error => {
-        console.error('Failed to load vehicles', error);
-        return throwError(() => error);
-      })
-    ),
-});
+  // computed() derives values from signals/resources
+  readonly currentFilm = computed(() => {
+    const films = this.films.value();
 
-starships = rxResource({
-  stream: () =>
-    this.swapiService.getStarships().pipe(
-      catchError(error => {
-        console.error('Failed to load starships', error);
-        return throwError(() => error);
-      })
-    ),
-});
+    if (!Array.isArray(films)) {
+      return null;
+    }
 
-
-getId(url: string): string {
-  return url.split('/').pop() ?? '';
-}
-
-get currentFilm(): any | null {
-  const films = this.films.value();
-
-  if (!Array.isArray(films)) {
-    return null;
-  }
-
-  return (
-    films.find((film: any) => {
+    const film = films.find((film: any) => {
       const title = film.properties?.title ?? film.title;
 
-      const slug = title
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-');
+      return (
+        this.toSlug(title) ===
+        this.episodeName.toLowerCase()
+      );
+    });
 
-      return slug === this.episodeName.toLowerCase();
-    }) ?? null
-  );
-}
+    if (!film) {
+      return null;
+    }
 
-  get backgroundImage(): string {
+    return {
+      ...film,
+      title: film.properties?.title ?? film.title,
+      episodeId:
+        film.properties?.episode_id ?? film.episode_id,
+      openingCrawl:
+        film.properties?.opening_crawl ??
+        film.opening_crawl,
+      director:
+        film.properties?.director ?? film.director,
+      producer:
+        film.properties?.producer ?? film.producer,
+      releaseDate:
+        film.properties?.release_date ??
+        film.release_date,
+    };
+  });
+
+  readonly characters = computed(() => {
+    const film = this.currentFilm();
+    const people = this.people.value();
+
+    if (!film || !Array.isArray(people)) {
+      return [];
+    }
+
+    return people.filter((person: any) =>
+      person.films?.includes(film.url)
+    );
+  });
+
+  readonly filmPlanets = computed(() => {
+    const film = this.currentFilm();
+    const planets = this.planets.value();
+
+    if (!film || !Array.isArray(planets)) {
+      return [];
+    }
+
+    return planets.filter((planet: any) =>
+      planet.films?.includes(film.url)
+    );
+  });
+
+  readonly filmSpecies = computed(() => {
+    const film = this.currentFilm();
+    const species = this.species.value();
+
+    if (!film || !Array.isArray(species)) {
+      return [];
+    }
+
+    return species.filter((specie: any) =>
+      specie.films?.includes(film.url)
+    );
+  });
+
+  readonly filmVehicles = computed(() => {
+    const film = this.currentFilm();
+    const vehicles = this.vehicles.value();
+
+    if (!film || !Array.isArray(vehicles)) {
+      return [];
+    }
+
+    return vehicles.filter((vehicle: any) =>
+      vehicle.films?.includes(film.url)
+    );
+  });
+
+  readonly filmStarships = computed(() => {
+    const film = this.currentFilm();
+    const starships = this.starships.value();
+
+    if (!film || !Array.isArray(starships)) {
+      return [];
+    }
+
+    return starships.filter((starship: any) =>
+      starship.films?.includes(film.url)
+    );
+  });
+
+  readonly backgroundImage = computed(() => {
     if (!this.episodeName) {
       return '/assets/images/default.jpg';
     }
 
-    const fileName = this.episodeName
+    return `/assets/images/${this.toSlug(
+      this.episodeName
+    )}.jpg`;
+  });
+
+  readonly backgroundStyle = computed(
+    () => `url('${this.backgroundImage()}')`
+  );
+
+  getId(url: string): string {
+    return url.split('/').filter(Boolean).pop() ?? '';
+  }
+
+  private toSlug(value: string): string {
+    return value
       .toLowerCase()
       .trim()
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-');
-
-    return `/assets/images/${fileName}.jpg`;
-  }
-
-  get backgroundStyle(): string {
-    return `
-      url('${this.backgroundImage}')
-    `;
   }
 }

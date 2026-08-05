@@ -1,19 +1,45 @@
 import { Routes } from '@angular/router';
-import { Landing } from './pages/landing/landing';
-import { Episode } from './pages/episode/episode';
-import { Planet } from './pages/planet/planet';
-import { Specie } from './pages/specie/specie';
-import { Vehicle } from './pages/vehicle/vehicle';
-import { Starship } from './pages/starship/starship';
-import { Person } from './pages/person/person';
 
+
+//added lazy loading for all pages, to check the difference in the browser 
 export const routes: Routes = [
-     { path: '', component: Landing}, 
-     { path: 'episode/:movie',  component: Episode },
-     { path: 'person/:id', component: Person },             
-     { path: 'planet/:id', component: Planet },
-     { path: 'specie/:id', component: Specie },
-     { path: 'vehicle/:id', component: Vehicle},
-     { path: 'starship/:id', component: Starship},
-       { path: '**',   redirectTo: '' }
+  {
+    path: '',
+    loadComponent: () =>
+      import('./pages/landing/landing').then(m => m.Landing),
+  },
+  {
+    path: 'episode/:movie',
+    loadComponent: () =>
+      import('./pages/episode/episode').then(m => m.Episode),
+  },
+  {
+    path: 'person/:id',
+    loadComponent: () =>
+      import('./pages/person/person').then(m => m.Person),
+  },
+  {
+    path: 'planet/:id',
+    loadComponent: () =>
+      import('./pages/planet/planet').then(m => m.Planet),
+  },
+  {
+    path: 'specie/:id',
+    loadComponent: () =>
+      import('./pages/specie/specie').then(m => m.Specie),
+  },
+  {
+    path: 'vehicle/:id',
+    loadComponent: () =>
+      import('./pages/vehicle/vehicle').then(m => m.Vehicle),
+  },
+  {
+    path: 'starship/:id',
+    loadComponent: () =>
+      import('./pages/starship/starship').then(m => m.Starship),
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
