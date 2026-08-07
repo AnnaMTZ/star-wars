@@ -3,6 +3,7 @@ import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
+import { getRequiredRouteParam, toSlug  } from '../../shared/utils/route.utils';
 
 @Component({
   selector: 'app-person',
@@ -14,9 +15,8 @@ import { landingService } from '../../services/landing.service/landing.service';
 export class Person {
   private swapiService = inject(landingService);
   private route = inject(ActivatedRoute);
-
-  //is used in every component, move to one place and reuse
-  readonly personId = this.route.snapshot.paramMap.get('id') ?? '';
+ readonly toSlug = toSlug;
+  readonly personId = getRequiredRouteParam(this.route, 'id');
 
   readonly people = rxResource({
     stream: () => this.swapiService.getPeople(),
@@ -107,6 +107,7 @@ export class Person {
     );
   });
 
+  /// to check if I can use relatedFilms
   readonly personFilms = computed(() => {
     const person = this.currentPerson();
 
@@ -123,11 +124,4 @@ export class Person {
     return url.split('/').filter(Boolean).pop() ?? '';
   }
 
-  toSlug(title: string): string {
-    return title
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-');
-  }
 }

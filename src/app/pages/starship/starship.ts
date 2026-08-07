@@ -3,6 +3,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
+import { getRelatedFilms, getRequiredRouteParam, toSlug } from '../../shared/utils/route.utils';
+
 
 @Component({
   selector: 'app-starship',
@@ -14,9 +16,10 @@ import { landingService } from '../../services/landing.service/landing.service';
 export class Starship {
   private route = inject(ActivatedRoute);
   private swapiService = inject(landingService);
+  readonly toSlug = toSlug;
 
-  readonly starshipId =
-    this.route.snapshot.paramMap.get('id') ?? '';
+readonly starshipId = getRequiredRouteParam(this.route, 'id');
+// const id = extractIdFromUrl(film.url);
 
   starships = rxResource({
     stream: () => this.swapiService.getStarships(),
@@ -41,15 +44,19 @@ export class Starship {
     );
   }
 
-toSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-');
-}
 
+  /// reuse the utility function to extract the ID from the URL
   getFilmId(url: string): string {
     return url.split('/').filter(Boolean).pop() ?? '';
   }
+
+get relatedFilms(): any[] {
+  return getRelatedFilms(
+    this.currentStarship?.films,
+    this.films.value()
+  );
 }
+}
+
+
+

@@ -9,6 +9,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, throwError } from 'rxjs';
 import { landingService } from '../../services/landing.service/landing.service';
+import { toSlug, extractIdFromUrl } from '../../shared/utils/route.utils';
 
 @Component({
   selector: 'app-episode',
@@ -20,13 +21,14 @@ import { landingService } from '../../services/landing.service/landing.service';
 export class Episode {
   private swapiService = inject(landingService);
   private route = inject(ActivatedRoute);
+  readonly toSlug = toSlug;
+  // readonly id = extractIdFromUrl(film.url);
 
 constructor() {
   effect(() => {
     console.log('Current Film:', this.currentFilm());
   });
 }
-
   
   readonly episodeName =
     this.route.snapshot.paramMap.get('movie') ?? '';
@@ -217,11 +219,4 @@ constructor() {
     return url.split('/').filter(Boolean).pop() ?? '';
   }
 
-  private toSlug(value: string): string {
-    return value
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-');
-  }
 }

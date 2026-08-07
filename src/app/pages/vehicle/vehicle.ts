@@ -3,6 +3,10 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
+import {
+  getRequiredRouteParam, toSlug, getRelatedFilms, extractIdFromUrl
+} from '../../shared/utils/route.utils';
+
 
 @Component({
   selector: 'app-vehicle',
@@ -14,9 +18,13 @@ import { landingService } from '../../services/landing.service/landing.service';
 export class Vehicle {
   private route = inject(ActivatedRoute);
   private swapiService = inject(landingService);
+  readonly toSlug = toSlug;
 
-  readonly vehicleId =
-    this.route.snapshot.paramMap.get('id') ?? '';
+readonly vehicleId = getRequiredRouteParam(
+  this.route,
+  'id'
+);
+
 
   vehicles = rxResource({
     stream: () => this.swapiService.getVehicles(),
@@ -26,26 +34,31 @@ export class Vehicle {
     stream: () => this.swapiService.getFilms(),
   });
 
-  toSlug(title: string): string {
-    return title
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-');
+get currentVehicle(): any | null {
+  const vehicles = this.vehicles.value();
+
+  if (!vehicles) {
+    return null;
   }
 
-  get currentVehicle(): any | null {
-    const vehicles = this.vehicles.value();
+  return (
+    vehicles.find(
+      (vehicle: any) =>
+        extractIdFromUrl(vehicle.url) === this.vehicleId
+    ) ?? null
+  );
+}
 
-    if (!vehicles) {
-      return null;
-    }
+  get relatedFilms(): any[] {
+  const vehicle = this.currentVehicle;
+  const films = this.films.value();
 
-    return (
-      vehicles.find((vehicle: any) => {
-        const id = vehicle.url?.split('/').filter(Boolean).pop();
-        return id === this.vehicleId;
-      }) ?? null
-    );
+  if (!vehicle?.films?.length || !films) {
+    return [];
   }
+
+  return films.filter((film: any) =>
+    vehicle.films.includes(film.url)
+  );
+}
 }

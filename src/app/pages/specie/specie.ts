@@ -3,6 +3,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
+import { getRequiredRouteParam, toSlug } from '../../shared/utils/route.utils';
+
 
 @Component({
   selector: 'app-specie',
@@ -15,8 +17,8 @@ export class Specie {
   private route = inject(ActivatedRoute);
   private swapiService = inject(landingService);
 
-  readonly specieId =
-    this.route.snapshot.paramMap.get('id') ?? '';
+  readonly specieId = getRequiredRouteParam(this.route, 'id');
+  readonly toSlug = toSlug;
 
   species = rxResource({
     stream: () => this.swapiService.getSpecies(),
@@ -41,15 +43,20 @@ export class Specie {
     );
   }
 
-  toSlug(title: string): string {
-    return title
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-');
-  }
-
   getFilmId(url: string): string {
     return url.split('/').filter(Boolean).pop() ?? '';
   }
+
+  get relatedFilms(): any[] {
+  const specie = this.currentSpecie;
+  const films = this.films.value();
+
+  if (!specie?.films?.length || !films) {
+    return [];
+  }
+
+  return films.filter((film: any) =>
+    specie.films.includes(film.url)
+  );
+}
 }

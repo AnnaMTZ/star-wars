@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
-import { RouterLink } from '@angular/router';
+import { getRequiredRouteParam, getRelatedFilms, toSlug } from '../../shared/utils/route.utils';
 
 @Component({
   selector: 'app-planet',
@@ -15,25 +15,16 @@ import { RouterLink } from '@angular/router';
 export class Planet {
   private route = inject(ActivatedRoute);
   private swapiService = inject(landingService);
-
-  readonly planetId =
-    this.route.snapshot.paramMap.get('id') ?? '';
+  readonly planetId = getRequiredRouteParam(this.route, 'id');
+  readonly toSlug = toSlug;
 
   planets = rxResource({
     stream: () => this.swapiService.getPlanets(),
   });
 
-films = rxResource({
-  stream: () => this.swapiService.getFilms(),
-});
-
-toSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-');
-}
+  films = rxResource({
+    stream: () => this.swapiService.getFilms(),
+  });
 
   get currentPlanet(): any | null {
     const planets = this.planets.value();
@@ -49,4 +40,11 @@ toSlug(title: string): string {
       }) ?? null
     );
   }
+
+get relatedFilms(): any[] {
+  return getRelatedFilms(
+    this.currentPlanet?.films,
+    this.films.value()
+  );
+}
 }

@@ -72,27 +72,28 @@
 
     <div class="films-container">
 
-@if (currentStarship.films?.length) {
+@if (relatedFilms.length) {
 
-  @for (film of films.value() ?? []; track film.url) {
-    @if (currentStarship.films?.includes(film.url)) {
+  @for (film of relatedFilms; track film.url) {
 
-      <div
-        class="film-card"
-        [routerLink]="['/episode', toSlug(film.title)]">
+    <div
+      class="film-card"
+      [routerLink]="[
+        '/episode',
+        toSlug(film.properties?.title ?? film.title)
+      ]">
 
-        <h2>
-          {{ film.properties?.title ?? film.title }}
-        </h2>
+      <h2>
+        {{ film.properties?.title ?? film.title }}
+      </h2>
 
-        <p>
-          Episode
-          {{ film.properties?.episode_id ?? film.episode_id }}
-        </p>
+      <p>
+        Episode
+        {{ film.properties?.episode_id ?? film.episode_id }}
+      </p>
 
-      </div>
+    </div>
 
-    }
   }
 
 } @else {
