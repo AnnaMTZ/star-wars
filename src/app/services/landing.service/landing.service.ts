@@ -20,6 +20,7 @@ export class landingService {
     } else {
       errorMessage = `Error ${error.status}: ${error.message}`;
     }
+
     return throwError(() => new Error(errorMessage));
   }
 
@@ -61,38 +62,37 @@ export class landingService {
 
   getFilms() {
     return this.http
-      .get<Film[]>(`${environment.apiUrl}/films`)
+      .get<any[]>(`${environment.apiUrl}/films`)
       .pipe(catchError(this.handleError));
   }
 
-  //Check where it is used
-  getByUrl<T>(url: string) {
+  getByUrl(url: string) {
     return this.http
-      .get<T>(url)
+      .get<any>(url)
       .pipe(catchError(this.handleError));
   }
 
   getPlanets() {
     return this.http
-      .get<[Planet]>(`${environment.apiUrl}/planets`)
+      .get<[]>(`${environment.apiUrl}/planets`)
       .pipe(catchError(this.handleError));
   }
 
   getSpecies() {
     return this.http
-      .get<Specie[]>(`${environment.apiUrl}/species`)
+      .get<any[]>(`${environment.apiUrl}/species`)
       .pipe(catchError(this.handleError));
   }
 
   getVehicles() {
     return this.http
-      .get<Vehicle[]>(`${environment.apiUrl}/vehicles`)
+      .get<any[]>(`${environment.apiUrl}/vehicles`)
       .pipe(catchError(this.handleError));
   }
 
   getStarships() {
     return this.http
-      .get<[]>(`${environment.apiUrl}/starships`)
+      .get<any[]>(`${environment.apiUrl}/starships`)
       .pipe(catchError(this.handleError));
   }
 }
