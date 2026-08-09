@@ -1,17 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-
-import { Specie } from './specie';
+import { StarshipComponent } from './starship.component';
 import { landingService } from '../../services/landing.service/landing.service';
 
-describe('Specie', () => {
-  let component: Specie;
-  let fixture: ComponentFixture<Specie>;
+describe('Starship', () => {
+  let component: StarshipComponent;
+  let fixture: ComponentFixture<StarshipComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Specie],
+      imports: [StarshipComponent],
       providers: [
         {
           provide: ActivatedRoute,
@@ -26,14 +25,14 @@ describe('Specie', () => {
         {
           provide: landingService,
           useValue: {
-            getSpecies: () => of([]),
+            getStarships: () => of([]),
             getFilms: () => of([]),
           },
         },
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Specie);
+    fixture = TestBed.createComponent(StarshipComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -53,7 +52,7 @@ describe('Specie', () => {
     ).toBe('1');
   });
 
-  it('should return null when no species are loaded', () => {
-    expect(component.currentSpecie).toBeNull();
+  it('should return null when no starships are loaded', () => {
+    expect(component.currentStarship).toBeNull();
   });
 });

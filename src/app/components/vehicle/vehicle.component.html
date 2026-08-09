@@ -60,9 +60,9 @@
 
     <h2>Films</h2>
 
-@if (currentVehicle?.films?.length) {
+@if (currentVehicle.films.length) {
   @for (film of films.value() ?? []; track film.url) {
-    @if (currentVehicle.films?.includes(film.url)) {
+    @if (currentVehicle.films.includes(film.url)) {
       ...
     }
   }

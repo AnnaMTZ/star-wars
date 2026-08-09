@@ -3,20 +3,23 @@ import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
-import { getRequiredRouteParam, toSlug  } from '../../shared/utils/route.utils';
+import { extractIdFromUrl, getRequiredRouteParam, toSlug  } from '../../core/utils/route.utils';
+import { Planet, Film, Person, Specie, Vehicle, Starship } from '../../core/models';
 
 @Component({
   selector: 'app-person',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './person.html',
-  styleUrl: './person.scss',
+  templateUrl: './person.component.html',
+  styleUrl: './person.component.scss',
 })
-export class Person {
+export class PersonComponent {
   private swapiService = inject(landingService);
   private route = inject(ActivatedRoute);
  readonly toSlug = toSlug;
   readonly personId = getRequiredRouteParam(this.route, 'id');
+  readonly getId = extractIdFromUrl;
+
 
   readonly people = rxResource({
     stream: () => this.swapiService.getPeople(),
@@ -50,24 +53,27 @@ export class Person {
     }
 
     return (
-      people.find((person: any) => {
+      people.find((person: Person) => {
         const id = person.url?.split('/').filter(Boolean).pop();
         return id === this.personId;
       }) ?? null
     );
   });
 
-  readonly homeworld = computed(() => {
-    const person = this.currentPerson();
+readonly homeworld = computed<Planet | null>(() => {
+  const person = this.currentPerson();
+  const planets = this.planets.value();
 
-    if (!person?.homeworld) return null;
+  if (!person?.homeworld || !planets) {
+    return null;
+  }
 
-    return (
-      this.planets
-        .value()
-        ?.find((planet: any) => planet.url === person.homeworld) ?? null
-    );
-  });
+  return (
+    planets?.find(
+      (planet: Planet) => planet.url === person.homeworld
+    ) ?? null
+  );
+});
 
   readonly personSpecies = computed(() => {
     const person = this.currentPerson();
@@ -77,7 +83,7 @@ export class Person {
     return (
       this.species
         .value()
-        ?.filter((specie: any) => person.species.includes(specie.url)) ?? []
+        ?.filter((specie: Specie) => person.species.includes(specie.url)) ?? []
     );
   });
 
@@ -89,7 +95,7 @@ export class Person {
     return (
       this.vehicles
         .value()
-        ?.filter((vehicle: any) => person.vehicles.includes(vehicle.url)) ?? []
+        ?.filter((vehicle: Vehicle) => person.vehicles.includes(vehicle.url)) ?? []
     );
   });
 
@@ -101,7 +107,7 @@ export class Person {
     return (
       this.starships
         .value()
-        ?.filter((starship: any) =>
+        ?.filter((starship: Starship) =>
           person.starships.includes(starship.url)
         ) ?? []
     );
@@ -116,12 +122,8 @@ export class Person {
     return (
       this.films
         .value()
-        ?.filter((film: any) => person.films.includes(film.url)) ?? []
+        ?.filter((film: Film) => person.films.includes(film.url)) ?? []
     );
   });
-
-  getId(url: string): string {
-    return url.split('/').filter(Boolean).pop() ?? '';
-  }
 
 }

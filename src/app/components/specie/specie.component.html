@@ -50,13 +50,13 @@
 
     <h2>Films</h2>
 
-    @if (currentSpecie?.films?.length) {
+    @if (currentSpecie.films.length) {
 
   <div class="films-container">
 
     @for (film of films.value() ?? []; track film.url) {
 
-      @if (currentSpecie.films?.includes(film.url)) {
+      @if (currentSpecie.films.includes(film.url)) {
 
         <div
           class="film-card"

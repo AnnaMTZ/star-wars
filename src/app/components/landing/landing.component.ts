@@ -9,10 +9,10 @@ import { catchError, throwError } from 'rxjs';
   selector: 'app-landing',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './landing.html',
-  styleUrls: ['./landing.scss']
+  templateUrl: './landing.component.html',
+  styleUrls: ['./landing.component.scss']
 })
-export class Landing {
+export class LandingComponent {
   private swapiService = inject(landingService);
 
 readonly films = rxResource({

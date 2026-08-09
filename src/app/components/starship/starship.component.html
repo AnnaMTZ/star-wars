@@ -80,16 +80,15 @@
       class="film-card"
       [routerLink]="[
         '/episode',
-        toSlug(film.properties?.title ?? film.title)
+        toSlug( film.title)
       ]">
-
       <h2>
-        {{ film.properties?.title ?? film.title }}
+        {{ film.title }}
       </h2>
 
       <p>
         Episode
-        {{ film.properties?.episode_id ?? film.episode_id }}
+        {{ film.episode_id }}
       </p>
 
     </div>

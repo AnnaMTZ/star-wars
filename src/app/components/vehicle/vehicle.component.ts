@@ -5,17 +5,17 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
 import {
   getRequiredRouteParam, toSlug, getRelatedFilms, extractIdFromUrl
-} from '../../shared/utils/route.utils';
-
+} from '../../core/utils/route.utils';
+import { Planet, Film, Person, Specie, Vehicle, Starship } from '../../core/models';
 
 @Component({
   selector: 'app-vehicle',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './vehicle.html',
-  styleUrls: ['./vehicle.scss'],
+  templateUrl: './vehicle.component.html',
+  styleUrls: ['./vehicle.component.scss'],
 })
-export class Vehicle {
+export class VehicleComponent {
   private route = inject(ActivatedRoute);
   private swapiService = inject(landingService);
   readonly toSlug = toSlug;
@@ -34,7 +34,7 @@ readonly vehicleId = getRequiredRouteParam(
     stream: () => this.swapiService.getFilms(),
   });
 
-get currentVehicle(): any | null {
+get currentVehicle(): Vehicle | null {
   const vehicles = this.vehicles.value();
 
   if (!vehicles) {
@@ -43,13 +43,13 @@ get currentVehicle(): any | null {
 
   return (
     vehicles.find(
-      (vehicle: any) =>
+      (vehicle: Vehicle) =>
         extractIdFromUrl(vehicle.url) === this.vehicleId
     ) ?? null
   );
 }
 
-  get relatedFilms(): any[] {
+  get relatedFilms(): Film[] {
   const vehicle = this.currentVehicle;
   const films = this.films.value();
 
@@ -57,7 +57,7 @@ get currentVehicle(): any | null {
     return [];
   }
 
-  return films.filter((film: any) =>
+  return films.filter((film: Film) =>
     vehicle.films.includes(film.url)
   );
 }

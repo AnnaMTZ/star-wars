@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environment';
 import { catchError, throwError } from 'rxjs';
+import { Planet, Film, Person, Specie, Vehicle, Starship } from '../../core/models';
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +74,7 @@ export class landingService {
 
   getPlanets() {
     return this.http
-      .get<any[]>(`${environment.apiUrl}/planets`)
+      .get<[]>(`${environment.apiUrl}/planets`)
       .pipe(catchError(this.handleError));
   }
 

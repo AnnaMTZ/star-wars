@@ -2,16 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { Person } from './person';
+import { PersonComponent } from './person.component';
 import { landingService } from '../../services/landing.service/landing.service';
 
 describe('Person', () => {
-  let component: Person;
-  let fixture: ComponentFixture<Person>;
+  let component: PersonComponent;
+  let fixture: ComponentFixture<PersonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Person],
+      imports: [PersonComponent],
       providers: [
         {
           provide: ActivatedRoute,
@@ -36,7 +36,7 @@ describe('Person', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Person);
+    fixture = TestBed.createComponent(PersonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -9,16 +9,17 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, throwError } from 'rxjs';
 import { landingService } from '../../services/landing.service/landing.service';
-import { toSlug, extractIdFromUrl } from '../../shared/utils/route.utils';
+import { toSlug, extractIdFromUrl } from '../../core/utils/route.utils';
+import { Planet, Film, Person, Specie, Vehicle, Starship } from '../../core/models';
 
 @Component({
   selector: 'app-episode',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './episode.html',
-  styleUrl: './episode.scss',
+  templateUrl: './episode.component.html',
+  styleUrl: './episode.component.scss',
 })
-export class Episode {
+export class EpisodeComponent {
   private swapiService = inject(landingService);
   private route = inject(ActivatedRoute);
   readonly toSlug = toSlug;
@@ -105,8 +106,8 @@ constructor() {
       return null;
     }
 
-    const film = films.find((film: any) => {
-      const title = film.properties?.title ?? film.title;
+    const film = films.find((film: Film) => {
+      const title = film.title ?? film.title;
 
       return (
         this.toSlug(title) ===
@@ -120,19 +121,13 @@ constructor() {
 
     return {
       ...film,
-      title: film.properties?.title ?? film.title,
-      episodeId:
-        film.properties?.episode_id ?? film.episode_id,
-      openingCrawl:
-        film.properties?.opening_crawl ??
-        film.opening_crawl,
-      director:
-        film.properties?.director ?? film.director,
-      producer:
-        film.properties?.producer ?? film.producer,
+      title: film.title,
+      episodeId: film.episode_id,
+      openingCrawl: film.opening_crawl,
+      director: film.director,
+      producer: film.producer,
       releaseDate:
-        film.properties?.release_date ??
-        film.release_date,
+ film.release_date,
     };
   });
 
@@ -144,20 +139,20 @@ constructor() {
       return [];
     }
 
-    return people.filter((person: any) =>
+    return people.filter((person: Person) =>
       person.films?.includes(film.url)
     );
   });
 
   readonly filmPlanets = computed(() => {
     const film = this.currentFilm();
-    const planets = this.planets.value();
+    const planets = this.planets;
 
     if (!film || !Array.isArray(planets)) {
       return [];
     }
 
-    return planets.filter((planet: any) =>
+    return planets.filter((planet: Planet) =>
       planet.films?.includes(film.url)
     );
   });
@@ -170,7 +165,7 @@ constructor() {
       return [];
     }
 
-    return species.filter((specie: any) =>
+    return species.filter((specie: Specie) =>
       specie.films?.includes(film.url)
     );
   });
@@ -183,7 +178,7 @@ constructor() {
       return [];
     }
 
-    return vehicles.filter((vehicle: any) =>
+    return vehicles.filter((vehicle: Vehicle) =>
       vehicle.films?.includes(film.url)
     );
   });
@@ -196,7 +191,7 @@ constructor() {
       return [];
     }
 
-    return starships.filter((starship: any) =>
+    return starships.filter((starship: Starship) =>
       starship.films?.includes(film.url)
     );
   });

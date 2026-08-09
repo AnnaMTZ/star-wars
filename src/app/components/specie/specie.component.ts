@@ -3,17 +3,17 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
-import { getRequiredRouteParam, toSlug } from '../../shared/utils/route.utils';
-
+import { getRequiredRouteParam, toSlug } from '../../core/utils/route.utils';
+import { Planet, Film, Person, Specie, Vehicle, Starship } from '../../core/models';
 
 @Component({
   selector: 'app-specie',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './specie.html',
-  styleUrls: ['./specie.scss'],
+  templateUrl: './specie.component.html',
+  styleUrls: ['./specie.component.scss'],
 })
-export class Specie {
+export class SpecieComponent {
   private route = inject(ActivatedRoute);
   private swapiService = inject(landingService);
 
@@ -28,7 +28,7 @@ export class Specie {
     stream: () => this.swapiService.getFilms(),
   });
 
-  get currentSpecie(): any | null {
+  get currentSpecie(): Specie | null {
     const species = this.species.value();
 
     if (!species) {
@@ -36,7 +36,7 @@ export class Specie {
     }
 
     return (
-      species.find((specie: any) => {
+      species.find((specie: Specie) => {
         const id = specie.url?.split('/').filter(Boolean).pop();
         return id === this.specieId;
       }) ?? null
@@ -47,7 +47,7 @@ export class Specie {
     return url.split('/').filter(Boolean).pop() ?? '';
   }
 
-  get relatedFilms(): any[] {
+  get relatedFilms(): Film[] {
   const specie = this.currentSpecie;
   const films = this.films.value();
 
@@ -55,7 +55,7 @@ export class Specie {
     return [];
   }
 
-  return films.filter((film: any) =>
+  return films.filter((film: Film) =>
     specie.films.includes(film.url)
   );
 }

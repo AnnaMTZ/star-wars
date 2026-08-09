@@ -2,16 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { Starship } from './starship';
+import { PlanetComponent } from './planet.component';
 import { landingService } from '../../services/landing.service/landing.service';
 
-describe('Starship', () => {
-  let component: Starship;
-  let fixture: ComponentFixture<Starship>;
+describe('Planet', () => {
+  let component: PlanetComponent;
+  let fixture: ComponentFixture<PlanetComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Starship],
+      imports: [PlanetComponent ],
       providers: [
         {
           provide: ActivatedRoute,
@@ -26,14 +26,14 @@ describe('Starship', () => {
         {
           provide: landingService,
           useValue: {
-            getStarships: () => of([]),
+            getPlanets: () => of([]),
             getFilms: () => of([]),
           },
         },
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Starship);
+    fixture = TestBed.createComponent(PlanetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -47,13 +47,7 @@ describe('Starship', () => {
       .toBe('a-new-hope');
   });
 
-  it('should extract film id from url', () => {
-    expect(
-      component.getFilmId('https://swapi.info/api/films/1')
-    ).toBe('1');
-  });
-
-  it('should return null when no starships are loaded', () => {
-    expect(component.currentStarship).toBeNull();
+  it('should return null when no planets are loaded', () => {
+    expect(component.currentPlanet).toBeNull();
   });
 });
