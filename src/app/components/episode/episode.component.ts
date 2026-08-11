@@ -23,13 +23,7 @@ export class EpisodeComponent {
   private swapiService = inject(landingService);
   private route = inject(ActivatedRoute);
   readonly toSlug = toSlug;
-  // readonly id = extractIdFromUrl(film.url);
-
-constructor() {
-  effect(() => {
-    console.log('Current Film:', this.currentFilm());
-  });
-}
+  readonly getId = extractIdFromUrl;
   
   readonly episodeName =
     this.route.snapshot.paramMap.get('movie') ?? '';
@@ -37,7 +31,6 @@ constructor() {
   showCrawl = true;
   showFilmInfo = false;
 
-  // readonly in order not to be reassigned
   readonly films = rxResource({
     stream: () =>
       this.swapiService.getFilms().pipe(
@@ -98,7 +91,6 @@ constructor() {
       ),
   });
 
-  // computed() derives values from signals/resources
   readonly currentFilm = computed(() => {
     const films = this.films.value();
 
@@ -146,7 +138,7 @@ constructor() {
 
   readonly filmPlanets = computed(() => {
     const film = this.currentFilm();
-    const planets = this.planets;
+    const planets = this.planets.value();
 
     if (!film || !Array.isArray(planets)) {
       return [];
@@ -209,9 +201,4 @@ constructor() {
   readonly backgroundStyle = computed(
     () => `url('${this.backgroundImage()}')`
   );
-
-  getId(url: string): string {
-    return url.split('/').filter(Boolean).pop() ?? '';
-  }
-
 }

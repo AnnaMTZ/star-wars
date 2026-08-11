@@ -60,34 +60,47 @@
 
     <h2>Films</h2>
 
-@if (currentVehicle.films.length) {
-  @for (film of films.value() ?? []; track film.url) {
-    @if (currentVehicle.films.includes(film.url)) {
-      ...
-    }
+@if (relatedFilms.length) {
+
+  @for (film of relatedFilms; track film.url) {
+
+    <div
+      class="film-card"
+      [routerLink]="[
+        '/episode',
+        toSlug( film.title)
+      ]">
+      <h2>
+        {{ film.title }}
+      </h2>
+
+      <p>
+        Episode
+        {{ film.episode_id }}
+      </p>
+
+    </div>
+
   }
+
 } @else {
 
-      <div class="films-container">
+  <div
+    class="film-card"
+    routerLink="/">
 
-        <div
-          class="film-card"
-          [routerLink]="['/']">
+    <h2>No related films found</h2>
 
-          <h2>No Related Films Found</h2>
-
-          <p>Return to Landing Page</p>
-
-        </div>
-
-      </div>
-
-    }
+    <p>Return to Home</p>
 
   </div>
 
-} @else {
+}
+</div>
 
+
+
+} @else {
   <div class="person-details">
     <h1>Loading vehicle...</h1>
   </div>

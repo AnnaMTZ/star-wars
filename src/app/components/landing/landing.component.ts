@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
 import { catchError, throwError } from 'rxjs';
+import { toSlug } from '../../core/utils/route.utils';
 
 @Component({
   selector: 'app-landing',
@@ -14,6 +15,7 @@ import { catchError, throwError } from 'rxjs';
 })
 export class LandingComponent {
   private swapiService = inject(landingService);
+   readonly toSlug = toSlug;
 
 readonly films = rxResource({
   stream: () =>
@@ -24,12 +26,4 @@ readonly films = rxResource({
       })
     ),
 });
-
-  toSlug(title: string): string {
-    return title
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-');
-  }
 }

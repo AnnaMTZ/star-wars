@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
-import { getRelatedFilms, getRequiredRouteParam, toSlug } from '../../core/utils/route.utils';
+import { extractIdFromUrl, getRelatedFilms, getRequiredRouteParam, toSlug } from '../../core/utils/route.utils';
 import { Film, Starship } from '../../core/models';
 
 
@@ -20,7 +20,6 @@ export class StarshipComponent {
   readonly toSlug = toSlug;
 
 readonly starshipId = getRequiredRouteParam(this.route, 'id');
-// const id = extractIdFromUrl(film.url);
 
   starships = rxResource({
     stream: () => this.swapiService.getStarships(),
@@ -39,15 +38,10 @@ readonly starshipId = getRequiredRouteParam(this.route, 'id');
 
     return (
       starships.find((starship: Starship) => {
-        const id = starship.url?.split('/').filter(Boolean).pop();
+        const id = extractIdFromUrl(starship.url);
         return id === this.starshipId;
       }) ?? null
     );
-  }
-
-  /// reuse the utility function to extract the ID from the URL
-  getFilmId(url: string): string {
-    return url.split('/').filter(Boolean).pop() ?? '';
   }
 
 get relatedFilms(): Film[] {

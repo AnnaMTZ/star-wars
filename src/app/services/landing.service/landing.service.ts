@@ -62,37 +62,31 @@ export class landingService {
 
   getFilms() {
     return this.http
-      .get<any[]>(`${environment.apiUrl}/films`)
-      .pipe(catchError(this.handleError));
-  }
-
-  getByUrl(url: string) {
-    return this.http
-      .get<any>(url)
+      .get<Film[]>(`${environment.apiUrl}/films`)
       .pipe(catchError(this.handleError));
   }
 
   getPlanets() {
     return this.http
-      .get<[]>(`${environment.apiUrl}/planets`)
+      .get<Planet[]>(`${environment.apiUrl}/planets`)
       .pipe(catchError(this.handleError));
   }
 
   getSpecies() {
     return this.http
-      .get<any[]>(`${environment.apiUrl}/species`)
+      .get<Specie[]>(`${environment.apiUrl}/species`)
       .pipe(catchError(this.handleError));
   }
 
   getVehicles() {
     return this.http
-      .get<any[]>(`${environment.apiUrl}/vehicles`)
+      .get<Vehicle[]>(`${environment.apiUrl}/vehicles`)
       .pipe(catchError(this.handleError));
   }
 
   getStarships() {
     return this.http
-      .get<any[]>(`${environment.apiUrl}/starships`)
+      .get<Starship[]>(`${environment.apiUrl}/starships`)
       .pipe(catchError(this.handleError));
   }
 }

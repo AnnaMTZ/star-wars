@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { landingService } from '../../services/landing.service/landing.service';
 import { getRequiredRouteParam, toSlug } from '../../core/utils/route.utils';
-import { Planet, Film, Person, Specie, Vehicle, Starship } from '../../core/models';
+import { Film, Specie } from '../../core/models';
 
 @Component({
   selector: 'app-specie',
@@ -41,10 +41,6 @@ export class SpecieComponent {
         return id === this.specieId;
       }) ?? null
     );
-  }
-
-  getFilmId(url: string): string {
-    return url.split('/').filter(Boolean).pop() ?? '';
   }
 
   get relatedFilms(): Film[] {
