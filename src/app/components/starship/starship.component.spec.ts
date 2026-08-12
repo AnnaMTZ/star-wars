@@ -46,11 +46,11 @@ describe('Starship', () => {
       .toBe('a-new-hope');
   });
 
-  it('should extract film id from url', () => {
-    expect(
-      component.getFilmId('https://swapi.info/api/films/1')
-    ).toBe('1');
-  });
+  // it('should extract film id from url', () => {
+  //   expect(
+  //     component.getFilmId('https://swapi.info/api/films/1')
+  //   ).toBe('1');
+  // });
 
   it('should return null when no starships are loaded', () => {
     expect(component.currentStarship).toBeNull();

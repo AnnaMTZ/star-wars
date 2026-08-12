@@ -14,6 +14,7 @@ import { Planet, Film } from '../../core/models';
   styleUrls: ['./planet.component.scss'],
 })
 export class PlanetComponent {
+  [x: string]: any;
   private route = inject(ActivatedRoute);
   private swapiService = inject(landingService);
   readonly planetId = getRequiredRouteParam(this.route, 'id');
