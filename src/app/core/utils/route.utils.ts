@@ -1,4 +1,5 @@
 import { ActivatedRoute } from "@angular/router";
+import { Film } from "../models";
 
 export function getRequiredRouteParam(
   route: ActivatedRoute,
@@ -16,8 +17,8 @@ export function getRequiredRouteParam(
 
 export function getRelatedFilms(
   filmUrls: string[] | undefined,
-  films: any[] | undefined
-): any[] {
+  films:Film[] | undefined
+): Film[] {
   if (!filmUrls?.length || !films) {
     return [];
   }

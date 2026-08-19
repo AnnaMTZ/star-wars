@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LandingComponent } from './landing.component';
-import { landingService } from '../../services/landing.service/landing.service';
+import { SwapiService } from '../../core/services/landing.service/landing.service';
 import { of } from 'rxjs';
 
 describe('Landing', () => {
@@ -12,7 +12,7 @@ describe('Landing', () => {
       imports: [LandingComponent ],
       providers: [
         {
-          provide: landingService,
+          provide: SwapiService,
           useValue: {
             getFilms: () => of([]),
           },

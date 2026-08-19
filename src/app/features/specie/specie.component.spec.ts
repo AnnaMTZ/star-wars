@@ -2,16 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { VehicleComponent } from './vehicle.component';
-import { landingService } from '../../services/landing.service/landing.service';
+import { SpecieComponent } from './specie.component';
+import { SwapiService } from '../../core/services/swapi.service';
 
-describe('Vehicle', () => {
-  let component: VehicleComponent;
-  let fixture: ComponentFixture<VehicleComponent>;
+describe('Specie', () => {
+  let component: SpecieComponent;
+  let fixture: ComponentFixture<SpecieComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VehicleComponent],
+      imports: [SpecieComponent],
       providers: [
         {
           provide: ActivatedRoute,
@@ -24,16 +24,16 @@ describe('Vehicle', () => {
           },
         },
         {
-          provide: landingService,
+          provide: SwapiService,
           useValue: {
-            getVehicles: () => of([]),
+            getSpecies: () => of([]),
             getFilms: () => of([]),
           },
         },
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(VehicleComponent);
+    fixture = TestBed.createComponent(SpecieComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -47,7 +47,13 @@ describe('Vehicle', () => {
       .toBe('a-new-hope');
   });
 
-  it('should return null when no vehicles are loaded', () => {
-    expect(component.currentVehicle).toBeNull();
+  // it('should extract film id from url', () => {
+  //   expect(
+  //     component.specieId('https://swapi.info/api/films/1')
+  //   ).toBe('1');
+  // });
+
+  it('should return null when no species are loaded', () => {
+    expect(component.currentSpecie).toBeNull();
   });
 });

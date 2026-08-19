@@ -1,68 +1,79 @@
-@if (currentVehicle) {
+@if (currentStarship(); as starship) {
 
   <div class="person-details">
 
-    <h1>{{ currentVehicle.name }}</h1>
-
+    <h1>{{ starship.name }}</h1>
     <div class="info-grid">
 
       <p>
         <strong>Model:</strong>
-        {{ currentVehicle.model }}
+        {{ starship.model }}
       </p>
 
       <p>
         <strong>Manufacturer:</strong>
-        {{ currentVehicle.manufacturer }}
+        {{ starship.manufacturer }}
       </p>
 
       <p>
         <strong>Cost:</strong>
-        {{ currentVehicle.cost_in_credits }}
+        {{ starship.cost_in_credits }}
       </p>
 
       <p>
         <strong>Length:</strong>
-        {{ currentVehicle.length }}
+        {{ starship.length }}
       </p>
 
       <p>
         <strong>Max Atmosphering Speed:</strong>
-        {{ currentVehicle.max_atmosphering_speed }}
+        {{ starship.max_atmosphering_speed }}
       </p>
 
       <p>
         <strong>Crew:</strong>
-        {{ currentVehicle.crew }}
+        {{ starship.crew }}
       </p>
 
       <p>
         <strong>Passengers:</strong>
-        {{ currentVehicle.passengers }}
+        {{ starship.passengers }}
       </p>
 
       <p>
         <strong>Cargo Capacity:</strong>
-        {{ currentVehicle.cargo_capacity }}
+        {{ starship.cargo_capacity }}
       </p>
 
       <p>
         <strong>Consumables:</strong>
-        {{ currentVehicle.consumables }}
+        {{ starship.consumables }}
       </p>
 
       <p>
-        <strong>Vehicle Class:</strong>
-        {{ currentVehicle.vehicle_class }}
+        <strong>Hyperdrive Rating:</strong>
+        {{ starship.hyperdrive_rating }}
+      </p>
+
+      <p>
+        <strong>MGLT:</strong>
+        {{ starship.MGLT }}
+      </p>
+
+      <p>
+        <strong>Starship Class:</strong>
+        {{ starship.starship_class }}
       </p>
 
     </div>
 
     <h2>Films</h2>
 
-@if (relatedFilms.length) {
+    <div class="films-container">
 
-  @for (film of relatedFilms; track film.url) {
+@if (relatedFilms().length) {
+
+  @for (film of relatedFilms(); track film.url) {
 
     <div
       class="film-card"
@@ -96,13 +107,16 @@
   </div>
 
 }
-</div>
 
 
+    </div>
+
+  </div>
 
 } @else {
+
   <div class="person-details">
-    <h1>Loading vehicle...</h1>
+    <h1>Loading starship...</h1>
   </div>
 
 }

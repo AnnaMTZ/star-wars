@@ -6,37 +6,37 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./components/landing/landing.component').then(m => m.LandingComponent),
+      import('./features/landing/landing.component').then(m => m.LandingComponent),
   },
   {
     path: 'episode/:movie',
     loadComponent: () =>
-      import('./components/episode/episode.component').then(m => m.EpisodeComponent),
+      import('./features/episode/episode.component').then(m => m.EpisodeComponent),
   },
   {
     path: 'person/:id',
     loadComponent: () =>
-      import('./components/person/person.component').then(m => m.PersonComponent),
+      import('./features/person/person.component').then(m => m.PersonComponent),
   },
   {
     path: 'planet/:id',
     loadComponent: () =>
-      import('./components/planet/planet.component').then(m => m.PlanetComponent),
+      import('./features/planet/planet.component').then(m => m.PlanetComponent),
   },
   {
     path: 'specie/:id',
     loadComponent: () =>
-      import('./components/specie/specie.component').then(m => m.SpecieComponent),
+      import('./features/specie/specie.component').then(m => m.SpecieComponent),
   },
   {
     path: 'vehicle/:id',
     loadComponent: () =>
-      import('./components/vehicle/vehicle.component').then(m => m.VehicleComponent),
+      import('./features/vehicle/vehicle.component').then(m => m.VehicleComponent),
   },
   {
     path: 'starship/:id',
     loadComponent: () =>
-      import('./components/starship/starship.component').then(m => m.StarshipComponent),
+      import('./features/starship/starship.component').then(m => m.StarshipComponent),
   },
   {
     path: '**',

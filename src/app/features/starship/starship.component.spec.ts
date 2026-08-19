@@ -1,17 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { StarshipComponent } from './starship.component';
+import { SwapiService } from '../../core/services/landing.service/landing.service';
 
-import { SpecieComponent } from './specie.component';
-import { landingService } from '../../services/landing.service/landing.service';
-
-describe('Specie', () => {
-  let component: SpecieComponent;
-  let fixture: ComponentFixture<SpecieComponent>;
+describe('Starship', () => {
+  let component: StarshipComponent;
+  let fixture: ComponentFixture<StarshipComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SpecieComponent],
+      imports: [StarshipComponent],
       providers: [
         {
           provide: ActivatedRoute,
@@ -24,16 +23,16 @@ describe('Specie', () => {
           },
         },
         {
-          provide: landingService,
+          provide: SwapiService,
           useValue: {
-            getSpecies: () => of([]),
+            getStarships: () => of([]),
             getFilms: () => of([]),
           },
         },
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SpecieComponent);
+    fixture = TestBed.createComponent(StarshipComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -49,11 +48,11 @@ describe('Specie', () => {
 
   // it('should extract film id from url', () => {
   //   expect(
-  //     component.specieId('https://swapi.info/api/films/1')
+  //     component.getFilmId('https://swapi.info/api/films/1')
   //   ).toBe('1');
   // });
 
-  it('should return null when no species are loaded', () => {
-    expect(component.currentSpecie).toBeNull();
+  it('should return null when no starships are loaded', () => {
+    expect(component.currentStarship).toBeNull();
   });
 });

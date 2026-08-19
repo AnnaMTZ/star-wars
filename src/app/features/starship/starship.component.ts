@@ -1,22 +1,21 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { landingService } from '../../services/landing.service/landing.service';
+import { SwapiService } from '../../core/services/swapi.service';
 import { extractIdFromUrl, getRelatedFilms, getRequiredRouteParam, toSlug } from '../../core/utils/route.utils';
 import { Film, Starship } from '../../core/models';
 
 
 @Component({
   selector: 'app-starship', 
-  standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './starship.component.html',
   styleUrls: ['./starship.component.scss'],
 })
 export class StarshipComponent {
   private route = inject(ActivatedRoute);
-  private swapiService = inject(landingService);
+  private swapiService = inject(SwapiService);
   readonly toSlug = toSlug;
 
 readonly starshipId = getRequiredRouteParam(this.route, 'id');
@@ -29,27 +28,30 @@ readonly starshipId = getRequiredRouteParam(this.route, 'id');
     stream: () => this.swapiService.getFilms(),
   });
 
-  get currentStarship(): Starship | null {
-    const starships = this.starships.value();
+readonly currentStarship = computed(() => {
+  const starships = this.starships.value();
 
-    if (!starships) {
-      return null;
-    }
-
-    return (
-      starships.find((starship: Starship) => {
-        const id = extractIdFromUrl(starship.url);
-        return id === this.starshipId;
-      }) ?? null
-    );
+  if (!starships) {
+    return null;
   }
 
-get relatedFilms(): Film[] {
-  return getRelatedFilms(
-    this.currentStarship?.films,
-    this.films.value()
+  return (
+    starships.find((starship: Starship) => {
+      const id = extractIdFromUrl(starship.url);
+      return id === this.starshipId;
+    }) ?? null
   );
-}
+});
+
+readonly relatedFilms = computed(() => {
+  const starship = this.currentStarship();
+  const films = this.films.value();
+
+  return getRelatedFilms(
+    starship?.films,
+    films
+  );
+});
 }
 
 

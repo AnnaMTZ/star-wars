@@ -2,12 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environment';
 import { catchError, throwError } from 'rxjs';
-import { Planet, Film, Person, Specie, Vehicle, Starship } from '../../core/models';
+import { Planet, Film, Person, Specie, Vehicle, Starship } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class landingService {
+export class SwapiService {
   private http = inject(HttpClient);
 
   private handleError(error: HttpErrorResponse) {
@@ -56,7 +56,7 @@ export class landingService {
 
   getPeople() {
     return this.http
-      .get(`${environment.apiUrl}/people`)
+      .get<Person[]>(`${environment.apiUrl}/people`)
       .pipe(catchError(this.handleError));
   }
 

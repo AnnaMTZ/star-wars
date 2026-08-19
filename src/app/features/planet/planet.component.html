@@ -1,0 +1,45 @@
+@if (currentPlanet(); as planet) {
+  <div class="planet-details">
+    <h1>{{ planet.name }}</h1>
+
+    <div class="info-grid">
+      <p><strong>Rotation Period:</strong> {{ planet.rotation_period }}</p>
+      <p><strong>Orbital Period:</strong> {{ planet.orbital_period }}</p>
+      <p><strong>Diameter:</strong> {{ planet.diameter }}</p>
+      <p><strong>Climate:</strong> {{ planet.climate }}</p>
+      <p><strong>Gravity:</strong> {{ planet.gravity }}</p>
+      <p><strong>Terrain:</strong> {{ planet.terrain }}</p>
+      <p><strong>Surface Water:</strong> {{ planet.surface_water }}</p>
+      <p><strong>Population:</strong> {{ planet.population }}</p>
+    </div>
+
+    <h2>Films</h2>
+
+    @if (relatedFilms().length) {
+      <div class="films-container">
+        @for (film of relatedFilms(); track film.url) {
+          <div
+            class="film-card"
+            [routerLink]="['/episode', toSlug(film.title)]">
+
+            <h3>{{ film.title }}</h3>
+            <p>Episode {{ film.episode_id }}</p>
+            <p>{{ film.release_date }}</p>
+
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="films-container">
+        <div
+          class="film-card"
+          routerLink="/">
+
+          <h3>No Related Films Found</h3>
+          <p>Return to Landing Page</p>
+
+        </div>
+      </div>
+    }
+  </div>
+}

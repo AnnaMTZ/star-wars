@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { EpisodeComponent } from './episode.component';
-import { landingService } from '../../services/landing.service/landing.service';
+import { SwapiService } from '../../core/services/landing.service/landing.service';
 
 describe('EpisodeComponent', () => {
   let component: EpisodeComponent;
@@ -15,7 +15,7 @@ describe('EpisodeComponent', () => {
         imports: [EpisodeComponent],
         providers: [
           {
-            provide: landingService,
+            provide: SwapiService,
             useValue: {
               getFilms: () =>
                 of([
@@ -139,7 +139,7 @@ describe('EpisodeComponent', () => {
         imports: [EpisodeComponent],
         providers: [
           {
-            provide: landingService,
+            provide: SwapiService,
             useValue: {
               getFilms: () => of([]),
               getPeople: () => of([]),
@@ -198,7 +198,7 @@ describe('EpisodeComponent', () => {
         imports: [EpisodeComponent],
         providers: [
           {
-            provide: landingService,
+            provide: SwapiService,
             useValue: {
               getFilms: () => of([]),
               getPeople: () => of([]),

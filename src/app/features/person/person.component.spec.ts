@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { PersonComponent } from './person.component';
-import { landingService } from '../../services/landing.service/landing.service';
+import { SwapiService } from '../../core/services/landing.service/landing.service';
 
 describe('PersonComponent', () => {
   let component: PersonComponent;
@@ -23,7 +23,7 @@ describe('PersonComponent', () => {
           },
         },
         {
-          provide: landingService,
+          provide: SwapiService,
           useValue: {
             getPeople: () =>
               of([

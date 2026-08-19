@@ -4,24 +4,24 @@ import {
   HttpTestingController,
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
+import { SwapiService } from './swapi.service';
 
-import { landingService } from './landing.service';
 import { environment } from '../../environment';
 
-describe('landingService', () => {
-  let service: landingService;
+describe('SwapiService', () => {
+  let service: SwapiService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        landingService,
+        SwapiService,
         provideHttpClient(),
         provideHttpClientTesting(),
       ],
     });
 
-    service = TestBed.inject(landingService);
+    service = TestBed.inject(SwapiService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 

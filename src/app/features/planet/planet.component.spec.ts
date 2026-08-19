@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { PlanetComponent } from './planet.component';
-import { landingService } from '../../services/landing.service/landing.service';
+import { SwapiService } from '../../core/services/landing.service/landing.service';
 
 describe('PlanetComponent', () => {
   let component: PlanetComponent;
@@ -25,7 +25,7 @@ describe('PlanetComponent', () => {
             },
           },
           {
-            provide: landingService,
+            provide: SwapiService,
             useValue: {
               getPlanets: () =>
                 of([
@@ -96,7 +96,7 @@ describe('PlanetComponent', () => {
             },
           },
           {
-            provide: landingService,
+            provide: SwapiService,
             useValue: {
               getPlanets: () =>
                 of([
@@ -148,7 +148,7 @@ describe('PlanetComponent', () => {
             },
           },
           {
-            provide: landingService,
+            provide: SwapiService,
             useValue: {
               getPlanets: () => of([]),
               getFilms: () => of([]),

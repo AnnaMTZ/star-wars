@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { landingService } from '../../services/landing.service/landing.service';
+import { SwapiService } from '../../core/services/swapi.service';
 import {
   getRequiredRouteParam, toSlug, getRelatedFilms, extractIdFromUrl
 } from '../../core/utils/route.utils';
@@ -10,14 +10,13 @@ import { Film, Vehicle } from '../../core/models';
 
 @Component({
   selector: 'app-vehicle',
-  standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './vehicle.component.html',
   styleUrls: ['./vehicle.component.scss'],
 })
 export class VehicleComponent {
   private route = inject(ActivatedRoute);
-  private swapiService = inject(landingService);
+  private swapiService = inject(SwapiService);
   readonly toSlug = toSlug;
 
 readonly vehicleId = getRequiredRouteParam(
@@ -34,7 +33,7 @@ readonly vehicleId = getRequiredRouteParam(
     stream: () => this.swapiService.getFilms(),
   });
 
-get currentVehicle(): Vehicle | null {
+readonly currentVehicle = computed(() => {
   const vehicles = this.vehicles.value();
 
   if (!vehicles) {
@@ -42,20 +41,20 @@ get currentVehicle(): Vehicle | null {
   }
 
   return (
-    vehicles.find(
-      (vehicle: Vehicle) => {
-             const id =  extractIdFromUrl(vehicle.url);
-        return id === this.vehicleId;
-      }
-     
-    ) ?? null
+    vehicles.find((vehicle: Vehicle) => {
+      const id = extractIdFromUrl(vehicle.url);
+      return id === this.vehicleId;
+    }) ?? null
   );
-}
+});
 
-  get relatedFilms(): Film[] {
+readonly relatedFilms = computed(() => {
+  const vehicle = this.currentVehicle();
+  const films = this.films.value();
+
   return getRelatedFilms(
-    this.currentVehicle?.films,
-    this.films.value()
+    vehicle?.films,
+    films
   );
-}
+});
 }

@@ -2,25 +2,23 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   computed,
-  effect,
   inject,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, throwError } from 'rxjs';
-import { landingService } from '../../services/landing.service/landing.service';
+import { SwapiService } from '../../core/services/swapi.service';
 import { toSlug, extractIdFromUrl } from '../../core/utils/route.utils';
 import { Planet, Film, Person, Specie, Vehicle, Starship } from '../../core/models';
 
 @Component({
   selector: 'app-episode',
-  standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './episode.component.html',
   styleUrl: './episode.component.scss',
 })
 export class EpisodeComponent {
-  private swapiService = inject(landingService);
+  private swapiService = inject(SwapiService);
   private route = inject(ActivatedRoute);
   readonly toSlug = toSlug;
   readonly getId = extractIdFromUrl;

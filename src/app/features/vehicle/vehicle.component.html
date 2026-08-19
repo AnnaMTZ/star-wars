@@ -1,80 +1,68 @@
-@if (currentStarship) {
+@if (currentVehicle(); as vehicle) {
 
   <div class="person-details">
 
-    <h1>{{ currentStarship.name }}</h1>
+    <h1>{{ vehicle.name }}</h1>
 
     <div class="info-grid">
 
       <p>
         <strong>Model:</strong>
-        {{ currentStarship.model }}
+        {{ vehicle.model }}
       </p>
 
       <p>
         <strong>Manufacturer:</strong>
-        {{ currentStarship.manufacturer }}
+        {{ vehicle.manufacturer }}
       </p>
 
       <p>
         <strong>Cost:</strong>
-        {{ currentStarship.cost_in_credits }}
+        {{ vehicle.cost_in_credits }}
       </p>
 
       <p>
         <strong>Length:</strong>
-        {{ currentStarship.length }}
+        {{ vehicle.length }}
       </p>
 
       <p>
         <strong>Max Atmosphering Speed:</strong>
-        {{ currentStarship.max_atmosphering_speed }}
+        {{ vehicle.max_atmosphering_speed }}
       </p>
 
       <p>
         <strong>Crew:</strong>
-        {{ currentStarship.crew }}
+        {{ vehicle.crew }}
       </p>
 
       <p>
         <strong>Passengers:</strong>
-        {{ currentStarship.passengers }}
+        {{ vehicle.passengers }}
       </p>
 
       <p>
         <strong>Cargo Capacity:</strong>
-        {{ currentStarship.cargo_capacity }}
+        {{ vehicle.cargo_capacity }}
       </p>
 
       <p>
         <strong>Consumables:</strong>
-        {{ currentStarship.consumables }}
+        {{ vehicle.consumables }}
       </p>
 
       <p>
-        <strong>Hyperdrive Rating:</strong>
-        {{ currentStarship.hyperdrive_rating }}
-      </p>
-
-      <p>
-        <strong>MGLT:</strong>
-        {{ currentStarship.MGLT }}
-      </p>
-
-      <p>
-        <strong>Starship Class:</strong>
-        {{ currentStarship.starship_class }}
+        <strong>Vehicle Class:</strong>
+        {{ vehicle.vehicle_class }}
       </p>
 
     </div>
 
     <h2>Films</h2>
 
-    <div class="films-container">
+@if (relatedFilms().length) {
 
-@if (relatedFilms.length) {
-
-  @for (film of relatedFilms; track film.url) {
+  @for (film of relatedFilms(); track film.url) {
 
     <div
       class="film-card"
@@ -108,16 +96,13 @@
   </div>
 
 }
+</div>
 
 
-    </div>
-
-  </div>
 
 } @else {
-
   <div class="person-details">
-    <h1>Loading starship...</h1>
+    <h1>Loading vehicle...</h1>
   </div>
 
 }

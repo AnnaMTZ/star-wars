@@ -53,7 +53,7 @@ And the class name:
 export class SwapiService {}
 ```
 
-Class names start with an uppercase letter in TypeScript. `landingService` works technically, but it differs from the Angular and TypeScript convention: `LandingService` or `SwapiService`.
+Class names start with an uppercase letter in TypeScript. `SwapiService` works technically, but it differs from the Angular and TypeScript convention: `SwapiService` or `SwapiService`.
 
 #### 2. Think in features later, rather than only in technical folders
 
@@ -293,7 +293,7 @@ Since backend work is the next step, this is a good time to make the frontend bo
 
 | Priority | Action | Why |
 |---|---|---|
-| High | Rename `landingService` to `SwapiService` and type all HTTP methods. | The code becomes clearer and backend integration becomes safer. |
+| High | Rename `SwapiService` to `SwapiService` and type all HTTP methods. | The code becomes clearer and backend integration becomes safer. |
 | High | Update the stale component tests and add real success/error/loading tests. | Tests must protect the current code. |
 | High | Use semantic links and check keyboard navigation. | This prevents accessibility problems in the UI. |
 | Medium | Use IDs for routes and load detail data directly. | This creates less fragile URLs and avoids unnecessary API calls. |

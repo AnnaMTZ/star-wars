@@ -2,19 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { landingService } from '../../services/landing.service/landing.service';
+import { SwapiService } from '../../core/services/swapi.service';
 import { extractIdFromUrl, getRequiredRouteParam, toSlug  } from '../../core/utils/route.utils';
 import { Planet, Film, Person, Specie, Vehicle, Starship } from '../../core/models';
 
 @Component({
   selector: 'app-person',
-  standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './person.component.html',
   styleUrl: './person.component.scss',
 })
 export class PersonComponent {
-  private swapiService = inject(landingService);
+  private swapiService = inject(SwapiService);
   private route = inject(ActivatedRoute);
  readonly toSlug = toSlug;
   readonly personId = getRequiredRouteParam(this.route, 'id');

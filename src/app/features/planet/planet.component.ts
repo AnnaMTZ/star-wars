@@ -1,14 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { landingService } from '../../services/landing.service/landing.service';
+import { SwapiService } from '../../core/services/swapi.service';
 import { getRequiredRouteParam, getRelatedFilms, toSlug } from '../../core/utils/route.utils';
-import { Planet, Film } from '../../core/models';
+import { Planet } from '../../core/models';
 
 @Component({
   selector: 'app-planet',
-  standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './planet.component.html',
   styleUrls: ['./planet.component.scss'],
@@ -16,7 +15,7 @@ import { Planet, Film } from '../../core/models';
 export class PlanetComponent {
   [x: string]: any;
   private route = inject(ActivatedRoute);
-  private swapiService = inject(landingService);
+  private swapiService = inject(SwapiService);
   readonly planetId = getRequiredRouteParam(this.route, 'id');
   readonly toSlug = toSlug;
 
@@ -28,25 +27,28 @@ export class PlanetComponent {
     stream: () => this.swapiService.getFilms(),
   });
 
-  get currentPlanet(): Planet | null {
-    const planets = this.planets.value();
+readonly currentPlanet = computed(() => {
+  const planets = this.planets.value();
 
-    if (!planets) {
-      return null;
-    }
-
-    return (
-      planets.find((planet: Planet) => {
-        const id = planet.url?.split('/').filter(Boolean).pop();
-        return id === this.planetId;
-      }) ?? null
-    );
+  if (!planets) {
+    return null;
   }
 
-get relatedFilms(): Film[] {
-  return getRelatedFilms(
-    this.currentPlanet?.films,
-    this.films.value()
+  return (
+    planets.find((planet: Planet) => {
+      const id = planet.url?.split('/').filter(Boolean).pop();
+      return id === this.planetId;
+    }) ?? null
   );
-}
+});
+
+readonly relatedFilms = computed(() => {
+  const planet = this.currentPlanet();
+  const films = this.films.value();
+
+  return getRelatedFilms(
+    planet?.films,
+    films
+  );
+});
 }
