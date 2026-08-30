@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -10,7 +10,8 @@ import { toSlug } from '../../core/utils/route.utils';
   selector: 'app-landing',
   imports: [CommonModule, RouterLink],
   templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss']
+  styleUrls: ['./landing.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingComponent {
   private swapiService = inject(SwapiService);

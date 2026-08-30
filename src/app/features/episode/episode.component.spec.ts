@@ -1,235 +1,195 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 
 import { EpisodeComponent } from './episode.component';
-import { SwapiService } from '../../core/services/landing.service/landing.service';
+import { SwapiService } from '../../core/services/swapi.service';
+import { Film } from '../../core/models';
 
 describe('EpisodeComponent', () => {
   let component: EpisodeComponent;
   let fixture: ComponentFixture<EpisodeComponent>;
 
-  describe('with film data', () => {
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [EpisodeComponent],
-        providers: [
-          {
-            provide: SwapiService,
-            useValue: {
-              getFilms: () =>
-                of([
-                  {
-                    title: 'A New Hope',
-                    episode_id: 4,
-                    opening_crawl: 'crawl',
-                    director: 'George Lucas',
-                    producer: 'Gary Kurtz',
-                    release_date: '1977-05-25',
-                    url: 'film-url',
-                  },
-                ]),
-              getPeople: () =>
-                of([
-                  {
-                    name: 'Luke Skywalker',
-                    films: ['film-url'],
-                  },
-                ]),
-              getPlanets: () =>
-                of([
-                  {
-                    name: 'Tatooine',
-                    films: ['film-url'],
-                  },
-                ]),
-              getSpecies: () =>
-                of([
-                  {
-                    name: 'Human',
-                    films: ['film-url'],
-                  },
-                ]),
-              getVehicles: () =>
-                of([
-                  {
-                    name: 'Sand Crawler',
-                    films: ['film-url'],
-                  },
-                ]),
-              getStarships: () =>
-                of([
-                  {
-                    name: 'X-Wing',
-                    films: ['film-url'],
-                  },
-                ]),
+  const mockFilm = {
+    title: 'A New Hope',
+    episode_id: 4,
+    opening_crawl: 'It is a period of civil war...',
+    director: 'George Lucas',
+    producer: 'Gary Kurtz',
+    release_date: '1977-05-25',
+    url: 'https://swapi.dev/api/films/1/',
+  } as Film;
+
+  const swapiServiceMock = {
+    getFilms: jasmine.createSpy('getFilms').and.returnValue(
+      of([mockFilm])
+    ),
+
+    getPeople: jasmine.createSpy('getPeople').and.returnValue(
+      of([
+        {
+          name: 'Luke Skywalker',
+          films: [mockFilm.url],
+        },
+        {
+          name: 'Darth Vader',
+          films: [mockFilm.url],
+        },
+      ])
+    ),
+
+    getPlanets: jasmine.createSpy('getPlanets').and.returnValue(
+      of([
+        {
+          name: 'Tatooine',
+          films: [mockFilm.url],
+        },
+      ])
+    ),
+
+    getSpecies: jasmine.createSpy('getSpecies').and.returnValue(
+      of([
+        {
+          name: 'Human',
+          films: [mockFilm.url],
+        },
+      ])
+    ),
+
+    getVehicles: jasmine.createSpy('getVehicles').and.returnValue(
+      of([
+        {
+          name: 'Sand Crawler',
+          films: [mockFilm.url],
+        },
+      ])
+    ),
+
+    getStarships: jasmine.createSpy('getStarships').and.returnValue(
+      of([
+        {
+          name: 'X-wing',
+          films: [mockFilm.url],
+        },
+      ])
+    ),
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [EpisodeComponent],
+      providers: [
+        {
+          provide: SwapiService,
+          useValue: swapiServiceMock,
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              paramMap: convertToParamMap({
+                movie: 'a-new-hope',
+              }),
             },
           },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              snapshot: {
-                paramMap: {
-                  get: () => 'a-new-hope',
-                },
-              },
-            },
-          },
-        ],
-      }).compileComponents();
+        },
+      ],
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(EpisodeComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    });
+    fixture = TestBed.createComponent(EpisodeComponent);
+    component = fixture.componentInstance;
 
-    it('should create', () => {
-      expect(component).toBeTruthy();
-    });
-
-    it('should get movie name from route', () => {
-      expect(component.episodeName).toBe('a-new-hope');
-    });
-
-    it('should generate background image', () => {
-      expect(component.backgroundImage()).toBe(
-        '/assets/images/a-new-hope.jpg'
-      );
-    });
-
-    it('should generate background style', () => {
-      expect(component.backgroundStyle()).toContain(
-        'a-new-hope.jpg'
-      );
-    });
-
-    it('should return current film', () => {
-      const film = component.currentFilm();
-
-      expect(film).toBeTruthy();
-      expect(film?.title).toBe('A New Hope');
-      expect(film?.episodeId).toBe(4);
-    });
-
-    it('should return characters', () => {
-      expect(component.characters().length).toBe(1);
-    });
-
-    it('should return planets', () => {
-      expect(component.filmPlanets().length).toBe(1);
-    });
-
-    it('should return species', () => {
-      expect(component.filmSpecies().length).toBe(1);
-    });
-
-    it('should return vehicles', () => {
-      expect(component.filmVehicles().length).toBe(1);
-    });
-
-    it('should return starships', () => {
-      expect(component.filmStarships().length).toBe(1);
-    });
+    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
-  describe('without film data', () => {
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [EpisodeComponent],
-        providers: [
-          {
-            provide: SwapiService,
-            useValue: {
-              getFilms: () => of([]),
-              getPeople: () => of([]),
-              getPlanets: () => of([]),
-              getSpecies: () => of([]),
-              getVehicles: () => of([]),
-              getStarships: () => of([]),
-            },
-          },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              snapshot: {
-                paramMap: {
-                  get: () => 'a-new-hope',
-                },
-              },
-            },
-          },
-        ],
-      }).compileComponents();
-
-      fixture = TestBed.createComponent(EpisodeComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    });
-
-    it('should return null when film is not found', () => {
-      expect(component.currentFilm()).toBeNull();
-    });
-
-    it('should return empty characters', () => {
-      expect(component.characters()).toEqual([]);
-    });
-
-    it('should return empty planets', () => {
-      expect(component.filmPlanets()).toEqual([]);
-    });
-
-    it('should return empty species', () => {
-      expect(component.filmSpecies()).toEqual([]);
-    });
-
-    it('should return empty vehicles', () => {
-      expect(component.filmVehicles()).toEqual([]);
-    });
-
-    it('should return empty starships', () => {
-      expect(component.filmStarships()).toEqual([]);
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
-  describe('without route parameter', () => {
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [EpisodeComponent],
-        providers: [
-          {
-            provide: SwapiService,
-            useValue: {
-              getFilms: () => of([]),
-              getPeople: () => of([]),
-              getPlanets: () => of([]),
-              getSpecies: () => of([]),
-              getVehicles: () => of([]),
-              getStarships: () => of([]),
-            },
-          },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              snapshot: {
-                paramMap: {
-                  get: () => null,
-                },
-              },
-            },
-          },
-        ],
-      }).compileComponents();
+  it('should read episode name from route', () => {
+    expect(component.episodeName).toBe('a-new-hope');
+  });
 
-      fixture = TestBed.createComponent(EpisodeComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
+  it('should resolve current film', () => {
+    const film = component.currentFilm();
+
+    expect(film).not.toBeNull();
+    expect(film?.title).toBe('A New Hope');
+    expect(film?.episodeId).toBe(4);
+    expect(film?.director).toBe('George Lucas');
+  });
+
+  it('should resolve film characters', () => {
+    const characters = component.characters();
+
+    expect(characters.length).toBe(2);
+    expect(characters[0]?.name).toBe('Luke Skywalker');
+  });
+
+  it('should resolve film planets', () => {
+    const planets = component.filmPlanets();
+
+    expect(planets.length).toBe(1);
+    expect(planets[0]?.name).toBe('Tatooine');
+  });
+
+  it('should resolve film species', () => {
+    const species = component.filmSpecies();
+
+    expect(species.length).toBe(1);
+    expect(species[0]?.name).toBe('Human');
+  });
+
+  it('should resolve film vehicles', () => {
+    const vehicles = component.filmVehicles();
+
+    expect(vehicles.length).toBe(1);
+    expect(vehicles[0]?.name).toBe('Sand Crawler');
+  });
+
+  it('should resolve film starships', () => {
+    const starships = component.filmStarships();
+
+    expect(starships.length).toBe(1);
+    expect(starships[0]?.name).toBe('X-wing');
+  });
+
+  it('should build background image path', () => {
+    expect(component.backgroundImage()).toBe(
+      '/assets/images/a-new-hope.jpg'
+    );
+  });
+
+  it('should build background style', () => {
+    expect(component.backgroundStyle()).toBe(
+      "url('/assets/images/a-new-hope.jpg')"
+    );
+  });
+
+  it('should call all service methods', () => {
+    expect(swapiServiceMock.getFilms).toHaveBeenCalled();
+    expect(swapiServiceMock.getPeople).toHaveBeenCalled();
+    expect(swapiServiceMock.getPlanets).toHaveBeenCalled();
+    expect(swapiServiceMock.getSpecies).toHaveBeenCalled();
+    expect(swapiServiceMock.getVehicles).toHaveBeenCalled();
+    expect(swapiServiceMock.getStarships).toHaveBeenCalled();
+  });
+
+  it('should return null when no film matches route', () => {
+    spyOn(component.films, 'value').and.returnValue([]);
+
+    expect(component.currentFilm()).toBeNull();
+  });
+
+  it('should return default background image when episode name is empty', () => {
+    Object.defineProperty(component, 'episodeName', {
+      value: '',
+      configurable: true,
     });
 
-    it('should use default background image', () => {
-      expect(component.backgroundImage()).toBe(
-        '/assets/images/default.jpg'
-      );
-    });
+    expect(component.backgroundImage()).toBe(
+      '/assets/images/default.jpg'
+    );
   });
 });

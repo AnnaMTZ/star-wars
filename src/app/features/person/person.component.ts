@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { SwapiService } from '../../core/services/swapi.service';
@@ -11,6 +11,7 @@ import { Planet, Film, Person, Specie, Vehicle, Starship } from '../../core/mode
   imports: [CommonModule, RouterLink],
   templateUrl: './person.component.html',
   styleUrl: './person.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonComponent {
   private swapiService = inject(SwapiService);

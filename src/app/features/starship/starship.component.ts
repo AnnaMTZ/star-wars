@@ -1,17 +1,17 @@
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { SwapiService } from '../../core/services/swapi.service';
 import { extractIdFromUrl, getRelatedFilms, getRequiredRouteParam, toSlug } from '../../core/utils/route.utils';
-import { Film, Starship } from '../../core/models';
-
+import { Starship } from '../../core/models';
 
 @Component({
   selector: 'app-starship', 
   imports: [CommonModule, RouterLink],
   templateUrl: './starship.component.html',
   styleUrls: ['./starship.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StarshipComponent {
   private route = inject(ActivatedRoute);

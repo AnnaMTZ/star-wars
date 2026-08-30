@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -11,6 +11,7 @@ import {  Specie } from '../../core/models';
   imports: [CommonModule, RouterLink],
   templateUrl: './specie.component.html',
   styleUrls: ['./specie.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpecieComponent {
   private route = inject(ActivatedRoute);

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -10,12 +11,14 @@ import { catchError, throwError } from 'rxjs';
 import { SwapiService } from '../../core/services/swapi.service';
 import { toSlug, extractIdFromUrl } from '../../core/utils/route.utils';
 import { Planet, Film, Person, Specie, Vehicle, Starship } from '../../core/models';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-episode',
   imports: [CommonModule, RouterLink],
   templateUrl: './episode.component.html',
   styleUrl: './episode.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EpisodeComponent {
   private swapiService = inject(SwapiService);
@@ -26,8 +29,8 @@ export class EpisodeComponent {
   readonly episodeName =
     this.route.snapshot.paramMap.get('movie') ?? '';
 
-  showCrawl = true;
-  showFilmInfo = false;
+readonly showCrawl = signal(true);
+readonly showFilmInfo = signal(false);
 
   readonly films = rxResource({
     stream: () =>

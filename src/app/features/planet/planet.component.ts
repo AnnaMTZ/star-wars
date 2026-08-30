@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -11,6 +11,7 @@ import { Planet } from '../../core/models';
   imports: [CommonModule, RouterLink],
   templateUrl: './planet.component.html',
   styleUrls: ['./planet.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlanetComponent {
   [x: string]: any;

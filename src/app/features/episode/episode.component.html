@@ -13,10 +13,11 @@
         Episode {{ film.episodeId }}
       </h3>
 
-      <h3>
-        {{ film.openingCrawl }}
-      </h3>
-
+   @if (showCrawl()) {
+  <h3>
+    {{ film.openingCrawl }}
+  </h3>
+}
       <p>
         Director: {{ film.director }}
       </p>
