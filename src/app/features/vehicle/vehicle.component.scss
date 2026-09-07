@@ -1,4 +1,4 @@
-.person-details {
+.entity-details {
   background-color: rgb(30, 30, 107);
   color: yellow;
 
@@ -15,13 +15,13 @@
   text-align: center;
 }
 
-.person-details h1 {
+.entity-details h1 {
   color: #ffe81f;
   font-size: 2.5rem;
   margin-bottom: 2rem;
 }
 
-.person-details h2 {
+.entity-details h2 {
   color: #ffe81f;
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -109,14 +109,14 @@
   color: white;
 }
 
-.person-details a {
+.entity-details a {
   color: #ffe81f;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.2s ease;
 }
 
-.person-details a:hover {
+.entity-details a:hover {
   color: white;
   text-decoration: underline;
 }

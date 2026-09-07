@@ -1,4 +1,4 @@
-.person-details {
+.entity-details {
   background-color: rgb(30, 30, 107);
   color: yellow;
 
@@ -15,13 +15,13 @@
   text-align: center;
 }
 
-.person-details h1 {
+.entity-details h1 {
   color: #ffe81f;
   margin-bottom: 2rem;
   font-size: 2.5rem;
 }
 
-.person-details h2 {
+.entity-details h2 {
   color: #ffe81f;
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -58,7 +58,7 @@
   color: #ffe81f;
 }
 
-.person-details a {
+.entity-details a {
   color: #ffe81f;
   text-decoration: none;
 
@@ -68,12 +68,12 @@
   cursor: pointer;
 }
 
-.person-details a:hover {
+.entity-details a:hover {
   color: white;
   text-decoration: underline;
 }
 
-.person-details a:visited {
+.entity-details a:visited {
   color: #feda4a;
 }
 

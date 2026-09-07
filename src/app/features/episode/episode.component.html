@@ -1,8 +1,8 @@
-<section
+<main
   class="section"
   [style.background-image]="backgroundStyle()"
-  style="background-size: cover; background-position: center;"
 >
+//might need to. use NgOptimizedImage if there will be more images
   @if (currentFilm(); as film) {
 
     <div class="film-details">
@@ -14,24 +14,20 @@
       </h3>
 
    @if (showCrawl()) {
-  <h3>
+  <p>
     {{ film.openingCrawl }}
-  </h3>
+  </p>
 }
       <p>
         Director: {{ film.director }}
       </p>
-
       <p>
         Producer: {{ film.producer }}
       </p>
-
       <p>
         Release Date: {{ film.releaseDate }}
       </p>
-
       <h2>Characters</h2>
-
       @if (people.error()) {
         <p class="error-message">
           Failed to load characters.
@@ -42,14 +38,11 @@
             <div
               class="entity-tile"
               [routerLink]="['/person', getId(person.url)]">
-
               {{ person.name }}
-
             </div>
           }
         </div>
       }
-
       <h2>Planets</h2>
 
       @if (planets.error()) {
@@ -62,16 +55,12 @@
             <div
               class="entity-tile"
               [routerLink]="['/planet', getId(planet.url)]">
-
               {{ planet.name }}
-
             </div>
           }
         </div>
       }
-
       <h2>Species</h2>
-
       @if (species.error()) {
         <p class="error-message">
           Failed to load species.
@@ -82,16 +71,12 @@
             <div
               class="entity-tile"
               [routerLink]="['/specie', getId(specie.url)]">
-
               {{ specie.name }}
-
             </div>
           }
         </div>
       }
-
       <h2>Vehicles</h2>
-
       @if (vehicles.error()) {
         <p class="error-message">
           Failed to load vehicles.
@@ -102,16 +87,12 @@
             <div
               class="entity-tile"
               [routerLink]="['/vehicle', getId(vehicle.url)]">
-
               {{ vehicle.name }}
-
             </div>
           }
         </div>
       }
-
       <h2>Starships</h2>
-
       @if (starships.error()) {
         <p class="error-message">
           Failed to load starships.
@@ -122,15 +103,11 @@
             <div
               class="entity-tile"
               [routerLink]="['/starship', getId(starship.url)]">
-
               {{ starship.name }}
-
             </div>
           }
         </div>
       }
-
     </div>
-
   }
-</section>
+</main>
