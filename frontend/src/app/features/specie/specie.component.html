@@ -1,0 +1,96 @@
+@if (currentSpecies(); as specie) {
+
+  <div class="entity-details">
+
+    <h1>{{ specie.name }}</h1>
+    <div class="info-grid">
+
+      <p>
+        <strong>Classification:</strong>
+        {{ specie.classification }}
+      </p>
+
+      <p>
+        <strong>Designation:</strong>
+        {{ specie.designation }}
+      </p>
+
+      <p>
+        <strong>Average Height:</strong>
+        {{ specie.average_height }}
+      </p>
+
+      <p>
+        <strong>Skin Colors:</strong>
+        {{ specie.skin_colors }}
+      </p>
+
+      <p>
+        <strong>Hair Colors:</strong>
+        {{ specie.hair_colors }}
+      </p>
+
+      <p>
+        <strong>Eye Colors:</strong>
+        {{ specie.eye_colors }}
+      </p>
+
+      <p>
+        <strong>Average Lifespan:</strong>
+        {{ specie.average_lifespan }}
+      </p>
+
+      <p>
+        <strong>Language:</strong>
+        {{ specie.language }}
+      </p>
+
+    </div>
+
+    <h2>Films</h2>
+
+    @if ( specie.films.length) {
+
+  <div class="films-container">
+
+    @for (film of films.value() ?? []; track film.url) {
+
+      @if (specie.films.includes(film.url)) {
+
+        <div
+          class="film-card"
+          [routerLink]="[
+            '/episode',
+            toSlug (film.title)
+          ]">
+          <h2>
+            {{ film.title }}
+          </h2>
+          <p>
+            Episode
+            {{ film.episode_id }}
+          </p>
+          <p>
+            {{ film.release_date }}
+          </p>
+        </div>
+      }
+    }
+  </div>
+} @else {
+      <div class="films-container">
+        <div
+          class="film-card"
+          [routerLink]="['/']">
+          <h2>No Related Films Found</h2>
+          <p>Return to Landing Page</p>
+        </div>
+      </div>
+    }
+  </div>
+} @else {
+  <div class="entity-details">
+    <h1>Loading species...</h1>
+  </div>
+
+}
