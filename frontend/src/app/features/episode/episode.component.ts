@@ -23,6 +23,7 @@ import { signal } from '@angular/core';
 export class EpisodeComponent {
   private swapiService = inject(SwapiService);
   private route = inject(ActivatedRoute);
+  
   readonly toSlug = toSlug;
   readonly getId = extractIdFromUrl;
   
@@ -31,6 +32,8 @@ export class EpisodeComponent {
 
 readonly showCrawl = signal(true);
 readonly showFilmInfo = signal(false);
+
+
 
   readonly films = rxResource({
     stream: () =>
@@ -112,6 +115,9 @@ readonly showFilmInfo = signal(false);
       return null;
     }
 
+    console.log('current film', film);
+console.log('film url', film.url);
+
     return {
       ...film,
       title: film.title,
@@ -137,18 +143,26 @@ readonly showFilmInfo = signal(false);
     );
   });
 
-  readonly filmPlanets = computed(() => {
-    const film = this.currentFilm();
-    const planets = this.planets.value();
+readonly filmPlanets = computed(() => {
+  const film = this.currentFilm();
+  const planets = this.planets.value();
 
-    if (!film || !Array.isArray(planets)) {
-      return [];
-    }
+  if (!film || !Array.isArray(planets)) {
+    return [];
+  }
 
-    return planets.filter((planet: Planet) =>
-      planet.films?.includes(film.url)
+  return planets.filter((planet: Planet) => {
+    const match = planet.films?.includes(film.url);
+
+    console.log(
+      planet.name,
+      match,
+      planet.films
     );
+
+    return match;
   });
+});
 
   readonly filmSpecies = computed(() => {
     const film = this.currentFilm();

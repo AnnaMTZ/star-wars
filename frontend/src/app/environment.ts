@@ -4,6 +4,7 @@
 // };
 
 
+/// connecting nest js backend 
 export const environment = {
   apiUrl: 'http://localhost:3000'
 };

@@ -1,42 +1,68 @@
 import { Routes } from '@angular/router';
-
-
-//added lazy loading for all pages, to check the difference in the browser 
+import { authGuard } from './core/guards/auth.guard';
+ 
 export const routes: Routes = [
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./features/login/login.component').then(
+        m => m.LoginComponent,
+      ),
+  },
   {
     path: '',
     loadComponent: () =>
-      import('./features/landing/landing.component').then(m => m.LandingComponent),
+      import('./features/landing/landing.component').then(
+        m => m.LandingComponent,
+      ),
   },
   {
     path: 'episode/:movie',
     loadComponent: () =>
-      import('./features/episode/episode.component').then(m => m.EpisodeComponent),
+      import('./features/episode/episode.component').then(
+        m => m.EpisodeComponent,
+      ),
+    canActivate: [authGuard],
   },
   {
     path: 'person/:id',
     loadComponent: () =>
-      import('./features/person/person.component').then(m => m.PersonComponent),
+      import('./features/person/person.component').then(
+        m => m.PersonComponent,
+      ),
+    canActivate: [authGuard],
   },
   {
     path: 'planet/:id',
     loadComponent: () =>
-      import('./features/planet/planet.component').then(m => m.PlanetComponent),
+      import('./features/planet/planet.component').then(
+        m => m.PlanetComponent,
+      ),
+    canActivate: [authGuard],
   },
   {
     path: 'specie/:id',
     loadComponent: () =>
-      import('./features/specie/specie.component').then(m => m.SpecieComponent),
+      import('./features/specie/specie.component').then(
+        m => m.SpecieComponent,
+      ),
+    canActivate: [authGuard],
   },
   {
     path: 'vehicle/:id',
     loadComponent: () =>
-      import('./features/vehicle/vehicle.component').then(m => m.VehicleComponent),
+      import('./features/vehicle/vehicle.component').then(
+        m => m.VehicleComponent,
+      ),
+    canActivate: [authGuard],
   },
   {
     path: 'starship/:id',
     loadComponent: () =>
-      import('./features/starship/starship.component').then(m => m.StarshipComponent),
+      import('./features/starship/starship.component').then(
+        m => m.StarshipComponent,
+      ),
+    canActivate: [authGuard],
   },
   {
     path: '**',
