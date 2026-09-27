@@ -1,16 +1,21 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
+
 import { App } from './app/app';
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/compiler';
+import { appConfig } from './app/app.config';
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+import { keycloak } from './app/core/services/keycloak.service';
 
-export class MyComponent {
-  constructor(private http: HttpClient) {}
-
-  fetchData() {
-    return this.http.get('/api/data');
-  }
-}
+keycloak
+  .init({
+    onLoad: 'check-sso',
+    pkceMethod: 'S256'
+  })
+  .then(() => {
+    return bootstrapApplication(
+      App,
+      appConfig
+    );
+  })
+  .catch((err) => {
+    console.error(err);
+  });

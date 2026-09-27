@@ -1,42 +1,40 @@
-import { Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
-
-interface LoginResponse {
-  accessToken: string;
-}
+import { Injectable } from '@angular/core';
+import { keycloak } from './keycloak.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  isAuthenticated = signal(false);
 
-  constructor(private http: HttpClient) {
-    const token = localStorage.getItem('token');
-    this.isAuthenticated.set(!!token);
+  login(): Promise<void> {
+    return keycloak.login();
   }
 
-  login(username: string, password: string) {
-    return this.http
-      .post<LoginResponse>('http://localhost:3000/auth/login', {
-        username,
-        password,
-      })
-      .pipe(
-        tap((response) => {
-          localStorage.setItem('token', response.accessToken);
-          this.isAuthenticated.set(true);
-        }),
-      );
+  logout(): Promise<void> {
+    return keycloak.logout();
   }
 
-  logout() {
-    localStorage.removeItem('token');
-    this.isAuthenticated.set(false);
+  isAuthenticated(): boolean {
+    return !!keycloak.authenticated;
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
+  getToken(): string | undefined {
+    return keycloak.token;
+  }
+
+  getClaims(): any {
+    return keycloak.tokenParsed;
+  }
+
+  get userName(): string {
+    return this.getClaims()?.name ?? '';
+  }
+
+  get email(): string {
+    return this.getClaims()?.email ?? '';
+  }
+
+  get profilePicture(): string {
+    return this.getClaims()?.picture ?? '';
   }
 }

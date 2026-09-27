@@ -1,14 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
- 
+
 export const routes: Routes = [
-  {
-    path: 'login',
-    loadComponent: () =>
-      import('./features/login/login.component').then(
-        m => m.LoginComponent,
-      ),
-  },
   {
     path: '',
     loadComponent: () =>
@@ -16,6 +9,17 @@ export const routes: Routes = [
         m => m.LandingComponent,
       ),
   },
+
+  {
+    path: 'auth/callback',
+    loadComponent: () =>
+      import(
+        './features/auth-callback/auth-callback.component'
+      ).then(
+        m => m.AuthCallbackComponent,
+      ),
+  },
+
   {
     path: 'episode/:movie',
     loadComponent: () =>
@@ -24,6 +28,7 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
+
   {
     path: 'person/:id',
     loadComponent: () =>
@@ -32,6 +37,7 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
+
   {
     path: 'planet/:id',
     loadComponent: () =>
@@ -40,6 +46,7 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
+
   {
     path: 'specie/:id',
     loadComponent: () =>
@@ -48,6 +55,7 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
+
   {
     path: 'vehicle/:id',
     loadComponent: () =>
@@ -56,6 +64,7 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
+
   {
     path: 'starship/:id',
     loadComponent: () =>
@@ -64,6 +73,7 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
+
   {
     path: '**',
     redirectTo: '',
