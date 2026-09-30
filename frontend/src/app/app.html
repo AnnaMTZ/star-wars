@@ -1,11 +1,43 @@
-
-
 <style>
   :host {
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
   }
+
+  .header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 </style>
 
-<router-outlet></router-outlet>
+<div class="header">
+  @if (auth.isAuthenticated()) {
+    @if (auth.profilePicture) {
+      <img
+        [src]="auth.profilePicture"
+        [alt]="auth.userName"
+        class="avatar"
+      />
+    }
+
+    <span>{{ auth.userName }}</span>
+
+    <button (click)="logout()">Logout</button>
+  } @else {
+    <button (click)="login()">Login</button>
+  }
+</div>
+
+<router-outlet />

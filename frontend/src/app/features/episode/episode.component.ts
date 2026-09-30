@@ -33,8 +33,6 @@ export class EpisodeComponent {
 readonly showCrawl = signal(true);
 readonly showFilmInfo = signal(false);
 
-
-
   readonly films = rxResource({
     stream: () =>
       this.swapiService.getFilms().pipe(
@@ -115,9 +113,6 @@ readonly showFilmInfo = signal(false);
       return null;
     }
 
-    console.log('current film', film);
-console.log('film url', film.url);
-
     return {
       ...film,
       title: film.title,
@@ -153,13 +148,6 @@ readonly filmPlanets = computed(() => {
 
   return planets.filter((planet: Planet) => {
     const match = planet.films?.includes(film.url);
-
-    console.log(
-      planet.name,
-      match,
-      planet.films
-    );
-
     return match;
   });
 });
