@@ -8,7 +8,8 @@ import { keycloak } from './app/core/services/keycloak.service';
 keycloak
   .init({
     onLoad: 'check-sso',
-    pkceMethod: 'S256'
+    pkceMethod: 'S256',
+    checkLoginIframe: false
   })
   .then(() => {
     return bootstrapApplication(
