@@ -1,36 +1,28 @@
 @if (auth.isAuthenticated()) {
   <div class="user-info">
-@if (picture) {
-  <img
-    [src]="picture"
-    alt="Profile picture"
-    class="avatar"
-  />
-}
+    @if (picture) {
+      <img
+        [src]="picture"
+        alt="Profile picture"
+        class="avatar"
+      />
+    }
+
     <div class="user-details">
       <div>{{ auth.userName }}</div>
       <div>{{ auth.email }}</div>
     </div>
   </div>
-}
 
-<section class="content">
-  <h1>Welcome to the Star Wars Universe!</h1>
-  <h2>Check the episodes</h2>
+  <div class="role-links">
+    @if (auth.hasRole('people')) {
+      <a routerLink="/person/1">People</a>
+    }
 
-  <div class="films-container">
-    @for (film of films.value() ?? []; track film.url) {
-      <div
-        class="film-card"
-        [routerLink]="['/episode', toSlug(film.title)]">
-        <h2>{{ film.title }}</h2>
-      </div>
+    @if (auth.hasRole('planets')) {
+      <a routerLink="/planet/1">Planets</a>
     }
   </div>
-</section>
-
-@if (films.error()) {
-  Failed to load films
 }
 
 <section class="content">

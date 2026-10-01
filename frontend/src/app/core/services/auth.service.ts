@@ -26,6 +26,12 @@ export class AuthService {
     return keycloak.tokenParsed;
   }
 
+  hasRole(role: string): boolean {
+    const claims = this.getClaims();
+
+    return claims?.realm_access?.roles?.includes(role) ?? false;
+  }
+
   get userName(): string {
     return this.getClaims()?.name ?? '';
   }
